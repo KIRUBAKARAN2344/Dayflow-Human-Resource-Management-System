@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import com.dayflow.security.JwtService;
+import com.dayflow.security.CustomUserDetailsService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,6 +31,12 @@ class AttendanceControllerTest {
 
     @MockBean
     private AttendanceService attendanceService;
+
+    @MockBean
+    private JwtService jwtService;
+
+    @MockBean
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private ObjectMapper objectMapper;
