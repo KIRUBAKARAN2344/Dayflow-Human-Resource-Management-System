@@ -1,10 +1,16 @@
-# Compiled class file
+# ==============================
+# Java / Compiled Files
+# ==============================
 *.class
 
-# Log file
+# ==============================
+# Logs
+# ==============================
 *.log
 
-# Package Files #
+# ==============================
+# Package Files
+# ==============================
 *.jar
 *.war
 *.nar
@@ -13,11 +19,15 @@
 *.tar.gz
 *.rar
 
-# Virtual machine crash logs
+# ==============================
+# JVM Crash Logs
+# ==============================
 hs_err_pid*
 replay_pid*
 
+# ==============================
 # Maven
+# ==============================
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -29,13 +39,31 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-# Node / Vite / Frontend
+# ==============================
+# Node.js / React / Vite
+# ==============================
 node_modules/
 dist/
 dist-ssr/
 *.local
+.npm/
+.eslintcache
 
-# Editor directories and files
+# ==============================
+# Environment Variables / Secrets
+# ==============================
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# ==============================
+# IDE / Editor
+# ==============================
 .idea/
 *.iml
 *.iws
@@ -43,11 +71,25 @@ dist-ssr/
 .vscode/
 *.sublime-project
 *.sublime-workspace
+
+# ==============================
+# OS Generated Files
+# ==============================
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Environment variables
-.env
-.env.local
-.env.production
-.env.development
+# ==============================
+# Temporary Files
+# ==============================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# ==============================
+# Coverage
+# ==============================
+coverage/
+.nyc_output/
