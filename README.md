@@ -1,144 +1,551 @@
-# Dayflow — Human Resource Management System
+# ⚡ DAYFLOW
 
-**A centralized platform for employee, attendance, leave, and payroll management.**
+### Human Resource Management System
 
-Built for the **Odoo × NMIT Bangalore Hackathon 2026**
+> **One workspace. Every employee. Every HR workflow.**
 
 ## 🚀 Live Demo
 
 👉 [Dayflow – Live Application]-https://dayflow-human-resource-management-system-dqfb.onrender.com
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/Odoo%20%C3%97%20NMIT-Bangalore%20Hackathon%202026-6C63FF?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-SETUP-00C853?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Spring%20Boot-Java-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+</p>
 
-## Table of Contents
-
-1. [Project Overview](#project-overview)
-2. [Problem / Motivation](#problem--motivation)
-3. [Objectives](#objectives)
-4. [Key Features](#key-features)
-5. [User Roles](#user-roles)
-6. [Technology Stack](#technology-stack)
-7. [System Architecture](#system-architecture)
-8. [Database Design](#database-design)
-9. [Project Structure](#project-structure)
-10. [Team Responsibilities](#team-responsibilities)
-11. [Setup & Installation](#setup--installation)
-12. [Environment Variables](#environment-variables)
-13. [Documentation References](#documentation-references)
-14. [License](#license)
+<p align="center">
+  <b>Employee Management • Attendance • Leave • Payroll • HR Operations</b>
+</p>
 
 ---
 
-## Project Overview
+## 🚀 What is Dayflow?
 
-Dayflow is a Human Resource Management System (HRMS) designed to provide a centralized platform for managing employee information, attendance, leave requests, payroll, and core HR operations.
+**Dayflow** is a centralized Human Resource Management System designed to simplify everyday HR operations through a single digital platform.
 
-The system is built around two primary user roles — **Admin/HR** and **Employee** — with a **React (Vite)** frontend consuming a **Spring Boot** REST API backend, backed by a **MySQL** database.
+Instead of using separate spreadsheets, manual attendance registers, disconnected leave systems, and payroll records, Dayflow brings everything together into one structured workflow.
 
-## Problem / Motivation
+### 👨‍💼 Admin / HR
 
-Many small and mid-sized organizations still manage HR processes — attendance, leave, and payroll — through manual methods like spreadsheets or disconnected tools. This leads to:
+- Employee management
+- Workforce overview
+- Attendance monitoring
+- Leave approval and rejection
+- Payroll management
+- HR dashboard
 
-- Inconsistent or duplicated employee records
-- Manual, error-prone attendance and leave tracking
-- Lack of visibility for HR into real-time workforce data
-- No self-service option for employees to check their own attendance, leave status, or payroll
+### 👤 Employee
 
-Dayflow aims to address this by consolidating these HR functions into a single, role-based web application with a clean separation between HR/Admin operations and employee self-service.
+- Personal profile
+- Employee dashboard
+- Check-in / Check-out
+- Attendance history
+- Leave application
+- Leave history
+- Payroll visibility
 
-## Objectives
+---
 
-- Provide a **single source of truth** for employee data referenced by attendance, leave, and payroll modules.
-- Give **Admin/HR** a centralized dashboard to manage employees, monitor attendance, approve/reject leave, and manage payroll.
-- Give **Employees** self-service access to check in/out, apply for leave, view leave history, and view payroll.
-- Enforce **secure, role-based authentication** using JWT.
-- Maintain a **simple, maintainable architecture** — one Spring Boot backend, one MySQL database, no microservices.
+## 💡 The Problem
 
-## Key Features
+Traditional HR workflows often depend on multiple disconnected systems.
 
-### Admin/HR Features
-- **Dashboard**: High-level statistics on headcount, attendance rates, leave requests, and payroll summary.
-- **Employee Management**: Create, edit, and deactivate employee records with auto-generated system IDs.
-- **Attendance Monitoring**: View daily attendance records, monitor check-in/out timestamps, filter by status.
-- **Leave Management**: Review leave requests, approve or reject with comments, track employee leave balances.
-- **Payroll Management**: Generate monthly payroll, manage salary components (Basic, HRA, Allowances, Deductions), calculate Net Pay.
+```text
+             TRADITIONAL HR
 
-### Employee Features
-- **Employee Dashboard**: Quick view of attendance status, leave balance, recent notifications.
-- **Systray Check-in/out Widget**: Instant check-in/out with live status dot and time counter.
-- **Leave Self-Service**: Apply for leaves with automatic day count and view real-time approval status.
-- **Payroll & Salary Slips**: View monthly salary breakdown and payment status.
-- **Profile Management**: View personal details, employment details, and department information.
+       📊 Spreadsheets
+              +
+       📝 Manual Records
+              +
+       📧 Messages / Emails
+              +
+       📁 Separate Payroll Files
+              ↓
+        ❌ Data Duplication
+        ❌ Manual Errors
+        ❌ Slow Approvals
+        ❌ Poor Visibility
+Dayflow changes this.
+                    ⚡ DAYFLOW
 
-## Technology Stack
+              ┌─────────────────┐
+              │   ADMIN / HR    │
+              └────────┬────────┘
+                       │
+                       ▼
+              ┌─────────────────┐
+              │    DAYFLOW      │
+              │      HRMS       │
+              └────────┬────────┘
+                       │
+       ┌───────────────┼───────────────┐
+       ▼               ▼               ▼
+   Attendance        Leave           Payroll
+       │               │               │
+       └───────────────┼───────────────┘
+                       ▼
+                 👤 EMPLOYEE
+✨ Core Features
+👤 Employee Experience
+Feature	Description
+🏠 Employee Dashboard	Personal HR overview
+👤 Profile	View employee information
+🟢 Check-in	Record daily attendance
+🔴 Check-out	Complete attendance cycle
+📅 Attendance	View attendance records
+📝 Apply Leave	Submit leave requests
+📋 Leave History	Track previous requests
+💰 Payroll	View salary/payroll information
+👨‍💼 Admin / HR Experience
+Feature	Description
+📊 Admin Dashboard	HR overview and statistics
+👥 Employee Management	Manage employee records
+🕐 Attendance Monitoring	Monitor workforce attendance
+📝 Leave Management	Approve or reject requests
+💰 Payroll Management	Manage employee payroll
+🔎 Employee Details	View individual employee information
+🧠 How Dayflow Works
+                    USER
+                     │
+                     ▼
+              ┌──────────────┐
+              │    LOGIN     │
+              └──────┬───────┘
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+          ▼                     ▼
+     👨‍💼 ADMIN              👤 EMPLOYEE
+          │                     │
+          ▼                     ▼
+    Admin Dashboard      Employee Dashboard
+          │                     │
+     ┌────┼────┐          ┌─────┼─────┐
+     ▼    ▼    ▼          ▼     ▼     ▼
+   Users Attend Leave    Attend Leave Payroll
+          │    │                │
+          └────┼────────────────┘
+               ▼
+             MYSQL
+🏗️ System Architecture
 
-- **Backend**: Java 17+, Spring Boot 3.2.5, Spring Security, Spring Data JPA, JJWT 0.13.0
-- **Frontend**: React 18, Vite, React Router v6, Lucide Icons, Vanilla CSS Design System
-- **Database**: MySQL 8.0+ (Production/Dev), In-Memory H2 Database (Automated Test Suite)
+Dayflow follows a clean three-layer architecture.
 
-## Team Responsibilities
+┌─────────────────────────────────────────┐
+│             FRONTEND LAYER              │
+│                                         │
+│          React + Vite + JSX             │
+│                                         │
+│    Admin UI        Employee UI          │
+└────────────────────┬────────────────────┘
+                     │
+                   Axios
+                     │
+                     ▼
+┌─────────────────────────────────────────┐
+│              BACKEND LAYER              │
+│                                         │
+│          Java + Spring Boot             │
+│                                         │
+│ Auth │ Employee │ Payroll │ Attendance  │
+│              Leave │ Security           │
+└────────────────────┬────────────────────┘
+                     │
+               Spring Data JPA
+                     │
+                     ▼
+┌─────────────────────────────────────────┐
+│              DATABASE LAYER              │
+│                                         │
+│                  MySQL                  │
+└─────────────────────────────────────────┘
+Architecture Principles
+One Spring Boot application
+One MySQL database
+REST API communication
+Modular package structure
+Role-based application flow
+Clear frontend ownership
+Shared API service layer
+🗄️ Database Architecture
 
-| Member | Area | Responsibilities |
-|---|---|---|
-| **Member 1** | Core Backend | Authentication, User, Employee, Payroll, Security, Exception handling, Core backend configuration |
-| **Member 2** | Attendance + Leave Backend | Attendance, check-in/check-out, attendance records, leave requests, leave approval/rejection |
-| **Member 3** | Admin/HR Frontend | Admin dashboard, employee management UI, attendance monitoring UI, leave approval UI, payroll management UI |
-| **Member 4** | Employee Frontend + Integration | Employee dashboard, profile, attendance UI, check-in/check-out UI, leave application, leave history, payroll viewing, frontend/API integration |
+Dayflow is centered around five core entities:
 
-## Setup & Installation
+                 ┌──────────┐
+                 │   USER   │
+                 └────┬─────┘
+                      │
+                      ▼
+                ┌───────────┐
+                │ EMPLOYEE  │
+                └─────┬─────┘
+                      │
+        ┌─────────────┼─────────────┐
+        │             │             │
+        ▼             ▼             ▼
+ ┌────────────┐ ┌────────────┐ ┌───────────┐
+ │ ATTENDANCE │ │   LEAVE    │ │  PAYROLL  │
+ └────────────┘ └────────────┘ └───────────┘
+Employee Identification
+id = 17
+employeeId = EMP017
+Field	Type	Purpose
+id	Long	Database primary key
+employeeId	String	Human-readable employee identifier
+🛠️ Technology Stack
+Frontend
+<p> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" /> <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" /> <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat-square" /> <img src="https://img.shields.io/badge/React_Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white" /> </p>
+React
+Vite
+JavaScript / JSX
+Axios
+React Router
+CSS
+Backend
+<p> <img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" /> <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white" /> <img src="https://img.shields.io/badge/Maven-C71A36?style=flat-square&logo=apachemaven&logoColor=white" /> <img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=springsecurity&logoColor=white" /> </p>
+Java
+Spring Boot
+Spring Web
+Spring Data JPA
+Spring Security
+Jakarta Validation
+JWT
+Maven
+Database
+MySQL
+Development & Testing
+Git
+GitHub
+VS Code
+Postman
+Spring Boot Test
+📁 Project Structure
+DAYFLOW/
+│
+├── backend/
+│   ├── pom.xml
+│   │
+│   └── src/
+│       ├── main/
+│       │   ├── java/com/dayflow/
+│       │   │
+│       │   ├── auth/
+│       │   ├── user/
+│       │   ├── employee/
+│       │   ├── payroll/
+│       │   ├── security/
+│       │   ├── exception/
+│       │   ├── config/
+│       │   ├── attendance/
+│       │   └── leave/
+│       │
+│       └── resources/
+│
+├── frontend/
+│   │
+│   └── src/
+│       ├── components/
+│       │   ├── common/
+│       │   ├── admin/
+│       │   └── employee/
+│       │
+│       ├── pages/
+│       │   ├── auth/
+│       │   ├── admin/
+│       │   └── employee/
+│       │
+│       ├── services/
+│       ├── hooks/
+│       ├── utils/
+│       └── assets/
+│
+├── database/
+│
+├── docs/
+│
+├── TEAM/
+│
+├── README.md
+│
+└── .gitignore
+👥 Team Architecture
 
-### Prerequisites
+Dayflow follows a four-member modular development model.
 
-- Java (JDK 17+) and Maven installed
-- Node.js (v18+) and npm installed
-- MySQL installed and running locally
+                     ⚡ DAYFLOW TEAM
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+        ▼                  ▼                  ▼
+    MEMBER 1           MEMBER 2        MEMBERS 3 & 4
+    BACKEND             BACKEND           FRONTEND
+        │                  │                  │
+        ▼                  ▼          ┌───────┴────────┐
+   Core Backend       Attendance +     │                │
+                        Leave        MEMBER 3        MEMBER 4
+                                     ADMIN           EMPLOYEE
+Member	Ownership
+👨‍💻 Member 1	Authentication, User, Employee, Payroll, Security, Core Backend
+👨‍💻 Member 2	Attendance, Check-in/out, Leave Requests, Leave Approval
+👨‍💻 Member 3	Admin / HR Frontend
+👨‍💻 Member 4	Employee Frontend + API Integration
 
-### Backend
+This separation reduces conflicts and allows each team member to work independently.
 
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Build and run tests:
-   ```bash
-   mvn clean test
-   ```
-3. Start the backend:
-   ```bash
-   mvn spring-boot:run
-   ```
+🟢 Development Status
 
-### Frontend
+Current repository status: SETUP
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+The Dayflow repository structure has been established and the complete application development workflow is organized.
 
-## Environment Variables
+Module	Status
+📁 Repository Structure	🟢 SETUP
+⚙️ Backend Structure	🟢 SETUP
+⚛️ Frontend Structure	🟢 SETUP
+🗄️ Database Structure	🟢 SETUP
+🔐 Authentication Module	🟢 SETUP
+👤 User Module	🟢 SETUP
+👥 Employee Module	🟢 SETUP
+🕐 Attendance Module	🟢 SETUP
+📝 Leave Module	🟢 SETUP
+💰 Payroll Module	🟢 SETUP
+👨‍💼 Admin Frontend	🟢 SETUP
+👤 Employee Frontend	🟢 SETUP
+🔗 API Integration	🟢 SETUP
+🧪 Testing Structure	🟢 SETUP
+📚 Documentation	🟢 SETUP
+Status Legend
+🟢 SETUP
+🟡 IN DEVELOPMENT
+🔵 INTEGRATION
+🧪 TESTING
+✅ COMPLETED
+🔄 Development Workflow
+             ┌──────────────┐
+             │    SETUP     │
+             └──────┬───────┘
+                    ▼
+             ┌──────────────┐
+             │   BACKEND    │
+             └──────┬───────┘
+                    ▼
+             ┌──────────────┐
+             │   FRONTEND   │
+             └──────┬───────┘
+                    ▼
+             ┌──────────────┐
+             │ API INTEGRATION│
+             └──────┬───────┘
+                    ▼
+             ┌──────────────┐
+             │   TESTING    │
+             └──────┬───────┘
+                    ▼
+             ┌──────────────┐
+             │ FINAL DEMO 🚀│
+             └──────────────┘
+🌐 API Communication
 
-Expected variables include:
+The frontend communicates with the Spring Boot backend through REST APIs.
 
-```env
-DB_URL=jdbc:mysql://localhost:3306/dayflow?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-DB_USERNAME=root
-DB_PASSWORD=your_password
-JWT_SECRET=your_jwt_secret_key_here
-```
+React
+  │
+  │ Axios
+  ▼
+Spring Boot REST API
+  │
+  ▼
+Service Layer
+  │
+  ▼
+Repository Layer
+  │
+  ▼
+MySQL
 
-## Documentation References
+Frontend API services are organized by responsibility:
 
-- [API Contract Specification](docs/API_CONTRACT.md)
-- [Team Structure & Responsibilities](docs/TEAM_STRUCTURE.md)
+services/
+│
+├── api.js
+├── authService.js
+├── employeeService.js
+├── attendanceService.js
+├── leaveService.js
+└── payrollService.js
+🔐 Security
 
-## License
+Dayflow follows security-oriented development practices.
 
-License: MIT / Hackathon project license
+JWT-based authentication
+Role-based access control
+Spring Security
+Jakarta request validation
+Protected application routes
+Environment-based configuration
+No hard-coded production credentials
+No committed secrets
+
+Never commit passwords, API keys, database credentials, JWT secrets, or .env files to GitHub.
+
+🚀 Getting Started
+1. Clone the Repository
+git clone https://github.com/KIRUBAKARAN2344/Dayflow-Human-Resource-Management-System.git
+cd Dayflow-Human-Resource-Management-System
+2. Backend Setup
+cd backend
+
+Build the backend:
+
+mvn clean install
+
+Run Spring Boot:
+
+mvn spring-boot:run
+3. Frontend Setup
+
+Open another terminal:
+
+cd frontend
+
+Install dependencies:
+
+npm install
+
+Start the Vite development server:
+
+npm run dev
+4. Database
+
+Create a MySQL database named:
+
+CREATE DATABASE dayflow;
+
+Configure your local database credentials using your local environment/configuration.
+
+Do not commit real credentials to GitHub.
+
+🔀 Git Workflow
+main
+│
+├── feature/core-backend
+│
+├── feature/attendance-leave
+│
+├── feature/admin-frontend
+│
+└── feature/employee-frontend
+Recommended workflow
+git checkout -b feature/employee-frontend
+
+git add .
+
+git commit -m "feat: implement employee dashboard"
+
+git push origin feature/employee-frontend
+
+Changes should be reviewed before merging into main.
+
+📸 Application Preview
+
+Application screenshots and demo GIFs can be added here as the UI evolves.
+
+Employee Experience
+┌───────────────────────────────────────────┐
+│              EMPLOYEE DASHBOARD           │
+├────────────────┬──────────────────────────┤
+│ Attendance     │ Leave                    │
+│                │                          │
+│   PRESENT      │   2 PENDING              │
+├────────────────┴──────────────────────────┤
+│                                           │
+│       CHECK IN       CHECK OUT             │
+│                                           │
+├───────────────────────────────────────────┤
+│ Recent Leave Requests                     │
+│                                           │
+│ PAID     AUG 25 - 27       PENDING        │
+└───────────────────────────────────────────┘
+Admin Experience
+┌───────────────────────────────────────────┐
+│                ADMIN DASHBOARD             │
+├────────────┬────────────┬─────────────────┤
+│ Employees  │ Attendance │ Leave Requests  │
+│    42      │    38      │       4         │
+├────────────┴────────────┴─────────────────┤
+│                                           │
+│          HR MANAGEMENT OVERVIEW            │
+│                                           │
+└───────────────────────────────────────────┘
+🏆 Why Dayflow?
+Before Dayflow
+📊 Excel
+📝 Paper
+📧 Email
+📁 Separate Records
+       ↓
+   HR Complexity
+With Dayflow
+              ⚡ DAYFLOW
+                  │
+       ┌──────────┼──────────┐
+       ▼          ▼          ▼
+   Employees   Attendance   Leave
+       │          │          │
+       └──────────┼──────────┘
+                  ▼
+               Payroll
+                  │
+                  ▼
+            Better HR Flow
+
+One system. One workflow. One source of truth.
+
+🔮 Future Enhancements
+
+Potential future improvements include:
+
+🤖 AI-powered HR assistant
+📊 Advanced HR analytics
+📄 Automated payslip generation
+📧 Email notifications
+📱 Progressive Web App support
+📈 Workforce insights
+📁 Employee document management
+🏢 Multi-organization support
+🎯 Hackathon
+Odoo × NMIT Bangalore Hackathon 2026
+
+Dayflow is developed as a collaborative hackathon project with the goal of creating a practical, maintainable HR management platform.
+
+Focus Areas
+              DAYFLOW
+                 │
+      ┌──────────┼──────────┐
+      ▼          ▼          ▼
+   UX/UI       Backend     Database
+      │          │          │
+      └──────────┼──────────┘
+                 ▼
+          Real-world HRMS
+Our Priorities
+⚡ Fast development
+🧩 Modular architecture
+🔐 Secure application design
+👥 Employee self-service
+👨‍💼 HR management
+🔗 Reliable API integration
+🧪 Testing
+🤝 Team collaboration
+📌 Project Status
+
+Dayflow is currently maintained as a hackathon project.
+
+The repository is organized around a single Spring Boot backend, React/Vite frontend, and MySQL database with clearly separated ownership across the four-member development team.
+
+📄 License
+
+License: To be determined.
