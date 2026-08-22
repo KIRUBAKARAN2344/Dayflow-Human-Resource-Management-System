@@ -1,59 +1,95 @@
 # ==============================
-# Java / Maven
+# Java / Compiled Files
 # ==============================
-
-target/
-**/target/
 *.class
-
-# ==============================
-# IntelliJ IDEA
-# ==============================
-
-.idea/
-*.iml
-*.iws
-*.ipr
-
-# ==============================
-# VS Code
-# ==============================
-
-.vscode/
-
-# ==============================
-# Node / React / Vite
-# ==============================
-
-node_modules/
-dist/
-build/
-*.local
-
-# ==============================
-# Environment / Secrets
-# ==============================
-
-.env
-.env.*
-!.env.example
 
 # ==============================
 # Logs
 # ==============================
-
 *.log
 
 # ==============================
-# OS generated files
+# Package Files
 # ==============================
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
 
+# ==============================
+# JVM Crash Logs
+# ==============================
+hs_err_pid*
+replay_pid*
+
+# ==============================
+# Maven
+# ==============================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ==============================
+# Node.js / React / Vite
+# ==============================
+node_modules/
+dist/
+dist-ssr/
+*.local
+.npm/
+.eslintcache
+
+# ==============================
+# Environment Variables / Secrets
+# ==============================
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# ==============================
+# IDE / Editor
+# ==============================
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# ==============================
+# OS Generated Files
+# ==============================
 .DS_Store
 Thumbs.db
+Desktop.ini
 
 # ==============================
-# Temporary files
+# Temporary Files
 # ==============================
-
 *.tmp
 *.temp
+*.swp
+*.swo
+*~
+
+# ==============================
+# Coverage
+# ==============================
+coverage/
+.nyc_output/
