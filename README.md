@@ -25,7 +25,8 @@ Built for the **Odoo × NMIT Bangalore Hackathon 2026**
 15. [Security Practices](#security-practices)
 16. [Future Enhancements](#future-enhancements)
 17. [Hackathon Information](#hackathon-information)
-18. [License](#license)
+18. [Documentation References](#documentation-references)
+19. [License](#license)
 
 ---
 
@@ -34,8 +35,6 @@ Built for the **Odoo × NMIT Bangalore Hackathon 2026**
 Dayflow is a Human Resource Management System (HRMS) designed to provide a centralized platform for managing employee information, attendance, leave requests, payroll, and core HR operations.
 
 The system is built around two primary user roles — **Admin/HR** and **Employee** — with a **React (Vite)** frontend consuming a **Spring Boot** REST API backend, backed by a **MySQL** database.
-
-> **Note:** This repository is in its initial development phase. The project structure and skeleton have been set up; business logic, APIs, and UI functionality are being implemented incrementally by the team. See [Development Status](#development-status) for exactly what exists today.
 
 ## Problem / Motivation
 
@@ -57,8 +56,6 @@ Dayflow aims to address this by consolidating these HR functions into a single, 
 - Maintain a **simple, maintainable architecture** — one Spring Boot backend, one MySQL database, no microservices.
 
 ## Key Features
-
-The following are the **planned** feature set for Dayflow. Implementation status for each is tracked separately in [Development Status](#development-status) — this section describes system scope, not current completion.
 
 | Feature Area | Description |
 |---|---|
@@ -102,6 +99,7 @@ Dayflow supports two roles:
 **Testing**
 - Postman
 - Spring Boot Test
+- H2 In-Memory Database (for integration testing)
 
 **Version Control**
 - Git
@@ -123,7 +121,7 @@ Spring Data JPA
    MySQL
 ```
 
-The project uses **one Spring Boot backend application** and **one MySQL database**. There is no microservices split — all backend modules (auth, user, employee, payroll, attendance, leave) live within a single Spring Boot codebase for simplicity and maintainability during the hackathon.
+The project uses **one Spring Boot backend application** and **one MySQL database**. All backend modules (auth, user, employee, payroll, attendance, leave) live within a single Spring Boot codebase for simplicity and maintainability during the hackathon.
 
 ## Database Design
 
@@ -147,23 +145,6 @@ Employee
   ├── LeaveRequest
   └── Payroll
 ```
-
-**Employee identifiers:**
-
-| Field | Type | Description |
-|---|---|---|
-| `id` | `Long` | Database primary key |
-| `employeeId` | `String` | Human-readable identifier, e.g. `EMP017` |
-
-Example:
-```text
-id = 17
-employeeId = EMP017
-```
-
-For the initial implementation, the Attendance and LeaveRequest modules (owned by Member 2) reference the employee using `Long employeeId`, per the agreed contract between backend owners.
-
-> Database tables have **not** been created yet in this repository — this section documents the planned schema/design only.
 
 ## Project Structure
 
@@ -228,25 +209,22 @@ DAYFLOW/
 
 ### Prerequisites
 
-- Java (JDK) and Maven installed
-- Node.js and npm installed
+- Java (JDK 17+) and Maven installed
+- Node.js (v18+) and npm installed
 - MySQL installed and running locally
 
 ### Backend
 
-1. Clone the repository.
-2. Navigate to the backend directory:
+1. Navigate to the backend directory:
    ```bash
    cd backend
    ```
-3. Configure MySQL locally and create a database named:
-   ```text
-   dayflow
-   ```
-4. Configure `application.properties` using local environment variables or placeholder values — **do not commit real credentials**.
-5. Build and run:
+2. Build and run tests:
    ```bash
-   mvn clean install
+   mvn clean test
+   ```
+3. Start the backend:
+   ```bash
    mvn spring-boot:run
    ```
 
@@ -264,108 +242,23 @@ DAYFLOW/
    ```bash
    npm run dev
    ```
-   The app will run on Vite's default development server (port as shown in your terminal output).
 
 ## Environment Variables
 
-Sensitive configuration must **never** be committed to the repository. Use a local `.env` file (kept untracked via `.gitignore`) or local environment variables instead.
-
-Expected variables include (values are placeholders only):
+Expected variables include:
 
 ```env
-DB_URL=
-DB_USERNAME=
-DB_PASSWORD=
-JWT_SECRET=
-VITE_API_BASE_URL=
+DB_URL=jdbc:mysql://localhost:3306/dayflow?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+DB_USERNAME=root
+DB_PASSWORD=your_password
+JWT_SECRET=your_jwt_secret_key_here
 ```
 
-- Do not commit `.env` files.
-- Do not commit real database credentials or JWT secrets.
-- Use placeholder/example values only in version-controlled files (e.g. `.env.example`).
+## Documentation References
 
-## Git Workflow
-
-**Branch structure:**
-
-```text
-main
-│
-├── feature/core-backend        (Member 1)
-├── feature/attendance-leave    (Member 2)
-├── feature/admin-frontend      (Member 3)
-└── feature/employee-frontend   (Member 4)
-```
-
-**Guidelines:**
-
-1. Work on your assigned feature branch.
-2. Commit regularly and meaningfully — hourly commits are encouraged during active hackathon development.
-3. Push your branch to the remote repository.
-4. Pull/rebase or merge carefully before integrating with `main`.
-5. Open a Pull Request when your work is ready for review/integration.
-6. Avoid directly modifying another member's assigned package or area without discussion.
-
-**Example commit workflow:**
-
-```bash
-git add .
-git commit -m "feat: build employee dashboard"
-git push
-```
-
-## Development Status
-
-| Component | Status |
-|---|---|
-| Project structure | ✅ Set up |
-| Backend skeleton | ✅ Set up |
-| Frontend skeleton | ✅ Set up |
-| Database design | 📋 Planned |
-| Authentication | 📋 Planned |
-| Employee management | 📋 Planned |
-| Attendance | 📋 Planned |
-| Leave management | 📋 Planned |
-| Payroll | 📋 Planned |
-| Admin dashboard | 📋 Planned |
-| Employee dashboard | 📋 Planned |
-| API integration | 📋 Planned |
-
-> This table reflects the repository at the initial scaffolding stage. As features are implemented, update each row to `🚧 In Progress` or `✅ Implemented` accordingly — statuses should always match the actual code in the repository, not the intended roadmap.
-
-## Security Practices
-
-- Never commit passwords or credentials.
-- Never commit JWT secrets.
-- Never commit `.env` files.
-- Never expose database connection strings in code or documentation.
-- Use environment variables for all sensitive configuration.
-- Validate all incoming request data (Jakarta Validation).
-- Use role-based authorization to protect Admin and Employee endpoints.
-
-## Future Enhancements
-
-Potential areas for extension beyond the hackathon scope:
-
-- Email notifications for leave approval/rejection
-- Payroll PDF payslip generation
-- Reporting and analytics dashboards
-- Multi-department/organization support
-- File upload for employee documents
-
-## Hackathon Information
-
-Dayflow is being built as a hackathon project for the **Odoo × NMIT Bangalore Hackathon 2026**, with a focus on:
-
-- Clean, maintainable architecture
-- A responsive, role-based frontend
-- A well-structured REST API backend
-- Reliable data management and validation
-- Practical, real-world HR use cases
-- Collaborative, branch-based team Git workflow
-
-This project is a hackathon prototype and is **not** described as production-ready, enterprise-grade, or fully secure.
+- [API Contract Specification](docs/API_CONTRACT.md)
+- [Team Structure & Responsibilities](docs/TEAM_STRUCTURE.md)
 
 ## License
 
-License: To be determined
+License: MIT / Hackathon project license
