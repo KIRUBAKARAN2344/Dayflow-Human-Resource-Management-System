@@ -1020,8 +1020,22 @@ select.form-control option {
   .sidebar { width: 200px; }
 }
 
-@media (max-width: 600px) {
-  .sidebar { display: none; }
+@media (max-width: 640px) {
+  .sidebar {
+    width: 70px;
+    padding: 16px 8px;
+  }
+  .sidebar-logo {
+    justify-content: center;
+    padding: 0 0 16px;
+  }
+  .sidebar-logo-text, .sidebar-label {
+    display: none;
+  }
+  .sidebar-link {
+    justify-content: center;
+    padding: 10px 0;
+  }
 }
 
 /* ── Accessibility: Reduced Motion Support ─────────────────────────────── */

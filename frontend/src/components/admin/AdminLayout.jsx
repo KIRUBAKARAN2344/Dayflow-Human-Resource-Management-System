@@ -1,39 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './AdminSidebar';
 import Navbar from './AdminNavbar';
 
-const AdminLayout = ({ children, currentPath = '/admin/dashboard', onNavigate }) => {
+const AdminLayout = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  // Sync current path from window.location if not explicitly passed
-  const [activePath, setActivePath] = useState(currentPath);
-
-  useEffect(() => {
-    setActivePath(currentPath || window.location.pathname);
-  }, [currentPath]);
-
-  // Listen for browser back/forward navigation
-  useEffect(() => {
-    const handlePopState = () => {
-      setActivePath(window.location.pathname);
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const activePath = location.pathname;
 
   const handleToggleSidebar = () => {
     if (window.innerWidth <= 1024) {
-      setIsMobileOpen(!isMobileOpen);
+      setIsMobileOpen((prev) => !prev);
     } else {
-      setIsCollapsed(!isCollapsed);
+      setIsCollapsed((prev) => !prev);
     }
   };
 
   const handleNavigation = (path) => {
-    setActivePath(path);
-    if (onNavigate) {
-      onNavigate(path);
+    navigate(path);
+    if (isMobileOpen) {
+      setIsMobileOpen(false);
     }
   };
 
@@ -52,7 +41,7 @@ const AdminLayout = ({ children, currentPath = '/admin/dashboard', onNavigate })
         currentPath={activePath}
         onNavigate={handleNavigation}
         isCollapsed={isCollapsed}
-        onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
+        onToggleCollapse={() => setIsCollapsed((prev) => !prev)}
         isMobileOpen={isMobileOpen}
         onCloseMobile={() => setIsMobileOpen(false)}
       />
@@ -87,7 +76,7 @@ const AdminLayout = ({ children, currentPath = '/admin/dashboard', onNavigate })
             boxSizing: 'border-box',
           }}
         >
-          {children}
+          <Outlet context={{ onNavigate: handleNavigation }} />
         </main>
       </div>
 

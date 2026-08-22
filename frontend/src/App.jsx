@@ -38,28 +38,6 @@ const EmployeeLayout = () => (
   </div>
 );
 
-// ── Admin Layout Wrapper ──────────────────────────────────────────────────────
-const AdminLayoutWrapper = ({ children }) => {
-  const [path, setPath] = React.useState(window.location.pathname);
-
-  React.useEffect(() => {
-    const handleLocationChange = () => setPath(window.location.pathname);
-    window.addEventListener('popstate', handleLocationChange);
-    return () => window.removeEventListener('popstate', handleLocationChange);
-  }, []);
-
-  const navigateTo = (newPath) => {
-    setPath(newPath);
-    window.history.pushState({}, '', newPath);
-  };
-
-  return (
-    <AdminLayout currentPath={path} onNavigate={navigateTo}>
-      {children(navigateTo)}
-    </AdminLayout>
-  );
-};
-
 function App() {
   return (
     <AuthProvider>
@@ -80,77 +58,18 @@ function App() {
           </Route>
 
           {/* ── Admin Portal (Member 3) ───────────────────────────── */}
-          <Route
-            path="/admin/employees/:empId"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => {
-                  const empId = window.location.pathname.replace('/admin/employees/', '');
-                  return <EmployeeDetails employeeId={empId} onNavigate={nav} />;
-                }}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin/employees"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => <Employees onNavigate={nav} />}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin/attendance/employee"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => <EmployeeAttendance onNavigate={nav} />}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin/attendance"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => <AdminAttendance onNavigate={nav} />}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin/leave-requests"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => <LeaveRequests onNavigate={nav} />}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin/leave"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => <LeaveRequests onNavigate={nav} />}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin/payroll"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => <AdminPayroll onNavigate={nav} />}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <AdminLayoutWrapper>
-                {(nav) => <AdminDashboard onNavigate={nav} />}
-              </AdminLayoutWrapper>
-            }
-          />
-          <Route
-            path="/admin"
-            element={<Navigate to="/admin/dashboard" replace />}
-          />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="employees" element={<Employees />} />
+            <Route path="employees/:empId" element={<EmployeeDetails />} />
+            <Route path="attendance" element={<AdminAttendance />} />
+            <Route path="attendance/employee" element={<EmployeeAttendance />} />
+            <Route path="leave-requests" element={<LeaveRequests />} />
+            <Route path="leave" element={<LeaveRequests />} />
+            <Route path="payroll" element={<AdminPayroll />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
 
           {/* ── Default redirect ──────────────────────────────────── */}
           <Route path="/" element={<Navigate to="/login" replace />} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
   DashboardIcon,
@@ -15,13 +16,16 @@ import {
 } from '../common/Icons';
 
 const AdminSidebar = ({
-  currentPath = '/admin/dashboard',
-  onNavigate,
   isCollapsed = false,
   onToggleCollapse,
   isMobileOpen = false,
   onCloseMobile,
+  onNavigate,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   let auth = null;
   try {
     auth = useAuth();
@@ -74,11 +78,9 @@ const AdminSidebar = ({
 
   const handleNavClick = (path, e) => {
     if (e) e.preventDefault();
+    navigate(path);
     if (onNavigate) {
       onNavigate(path);
-    } else {
-      window.history.pushState({}, '', path);
-      window.dispatchEvent(new Event('popstate'));
     }
     if (isMobileOpen && onCloseMobile) {
       onCloseMobile();
@@ -90,7 +92,7 @@ const AdminSidebar = ({
     if (auth && auth.logout) {
       await auth.logout();
     }
-    handleNavClick('/login');
+    navigate('/login');
   };
 
   const isLinkActive = (path) => {
@@ -139,7 +141,6 @@ const AdminSidebar = ({
           flexDirection: 'column',
           zIndex: 100,
           transition: 'width var(--transition-normal), transform var(--transition-normal)',
-          transform: isMobileOpen ? 'translateX(0)' : 'translateX(0)',
         }}
         className={`sidebar-container ${isMobileOpen ? 'mobile-open' : ''}`}
       >
@@ -301,9 +302,9 @@ const AdminSidebar = ({
                   const active = isLinkActive(item.path);
 
                   return (
-                    <a
+                    <button
                       key={item.path}
-                      href={item.path}
+                      type="button"
                       onClick={(e) => handleNavClick(item.path, e)}
                       title={isCollapsed ? item.label : undefined}
                       style={{
@@ -314,7 +315,10 @@ const AdminSidebar = ({
                         padding: isCollapsed ? '12px 0' : '11px 14px',
                         justifyContent: isCollapsed ? 'center' : 'flex-start',
                         borderRadius: '10px',
-                        textDecoration: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        width: '100%',
                         color: active ? '#FFFFFF' : 'var(--text-muted)',
                         background: active
                           ? 'linear-gradient(135deg, rgba(91, 95, 239, 0.9) 0%, rgba(124, 92, 252, 0.85) 100%)'
@@ -323,7 +327,6 @@ const AdminSidebar = ({
                         fontSize: '13.5px',
                         transition: 'all var(--transition-fast)',
                         boxShadow: active ? '0 4px 12px rgba(91, 95, 239, 0.35)' : 'none',
-                        border: active ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid transparent',
                       }}
                       onMouseEnter={(e) => {
                         if (!active) {
@@ -369,7 +372,7 @@ const AdminSidebar = ({
                           {item.label}
                         </span>
                       )}
-                    </a>
+                    </button>
                   );
                 })}
               </div>
