@@ -38,7 +38,7 @@ const QuickActions = ({ onNavigate }) => {
       description: 'Generate monthly salary reports, deductions, and disbursements.',
       icon: PayrollIcon,
       path: '/admin/payroll',
-      accent: '#2563EB',
+      accent: 'var(--electric-blue)',
       btnText: 'Manage Payroll',
     },
   ];
@@ -55,17 +55,14 @@ const QuickActions = ({ onNavigate }) => {
 
   return (
     <div
+      className="nexus-card"
       style={{
         marginTop: '28px',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '14px',
-        border: '1px solid var(--border-light)',
-        padding: '24px',
-        boxShadow: 'var(--shadow-sm)',
+        padding: '24px 26px',
       }}
     >
-      <div style={{ marginBottom: '18px' }}>
-        <h3 style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+      <div style={{ marginBottom: '20px' }}>
+        <h3 style={{ fontSize: '18px', fontWeight: '800', color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
           Executive Quick Actions
         </h3>
         <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
@@ -80,61 +77,61 @@ const QuickActions = ({ onNavigate }) => {
           gap: '16px',
         }}
       >
-        {actions.map((item, idx) => {
-          const Icon = item.icon;
+        {actions.map((act) => {
+          const Icon = act.icon;
           return (
             <div
-              key={idx}
-              onClick={(e) => handleClick(item.path, e)}
+              key={act.title}
+              onClick={(e) => handleClick(act.path, e)}
+              className="nexus-card-interactive"
               style={{
-                padding: '18px',
-                borderRadius: '12px',
+                padding: '20px',
+                borderRadius: 'var(--radius-md)',
                 border: '1px solid var(--border-light)',
                 backgroundColor: 'var(--bg-main)',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                gap: '14px',
                 transition: 'all var(--transition-fast)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = '#FFFFFF';
-                e.currentTarget.style.borderColor = item.accent;
-                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.borderColor = act.accent;
                 e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                e.currentTarget.style.transform = 'translateY(-3px)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = 'var(--bg-main)';
                 e.currentTarget.style.borderColor = 'var(--border-light)';
-                e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+              <div>
                 <div
                   style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '10px',
-                    backgroundColor: 'rgba(23, 29, 56, 0.08)',
-                    color: item.accent,
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    border: `1.5px solid ${act.accent}`,
+                    color: act.accent,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minWidth: '40px',
+                    marginBottom: '14px',
+                    boxShadow: 'var(--shadow-xs)',
                   }}
                 >
                   <Icon size={20} />
                 </div>
-                <div>
-                  <h4 style={{ fontSize: '14.5px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
-                    {item.title}
-                  </h4>
-                  <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px', margin: 0, lineHeight: '1.4' }}>
-                    {item.description}
-                  </p>
+                <div style={{ fontSize: '14.5px', fontWeight: '800', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+                  {act.title}
                 </div>
+                <p style={{ fontSize: '12.5px', color: 'var(--text-secondary)', marginTop: '4px', lineHeight: '1.4' }}>
+                  {act.description}
+                </p>
               </div>
 
               <div
@@ -142,13 +139,13 @@ const QuickActions = ({ onNavigate }) => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px',
-                  fontSize: '12.5px',
+                  marginTop: '16px',
+                  color: act.accent,
+                  fontSize: '13px',
                   fontWeight: '700',
-                  color: item.accent,
-                  alignSelf: 'flex-end',
                 }}
               >
-                <span>{item.btnText}</span>
+                <span>{act.btnText}</span>
                 <ArrowRightIcon size={14} />
               </div>
             </div>

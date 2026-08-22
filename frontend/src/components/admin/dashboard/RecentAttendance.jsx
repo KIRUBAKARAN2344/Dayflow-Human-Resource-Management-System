@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRightIcon, AttendanceIcon } from '../../common/Icons';
 
 const RecentAttendance = ({ records, onViewAll }) => {
-  // Demo mock data
   const defaultRecords = [
     {
       id: 1,
@@ -11,7 +10,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
       time: '08:45 AM',
       location: 'HQ Office',
       status: 'Present',
-      avatarColor: '#1D4ED8',
+      avatarColor: 'var(--royal-indigo)',
     },
     {
       id: 2,
@@ -20,7 +19,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
       time: '09:02 AM',
       location: 'HQ Office',
       status: 'Present',
-      avatarColor: '#059669',
+      avatarColor: '#10B981',
     },
     {
       id: 3,
@@ -29,7 +28,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
       time: '09:28 AM',
       location: 'Remote',
       status: 'Late',
-      avatarColor: '#D97706',
+      avatarColor: '#F59E0B',
     },
     {
       id: 4,
@@ -38,7 +37,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
       time: '08:50 AM',
       location: 'HQ Office',
       status: 'Present',
-      avatarColor: '#7C3AED',
+      avatarColor: '#7C5CFC',
     },
     {
       id: 5,
@@ -47,7 +46,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
       time: '-',
       location: 'Remote',
       status: 'On Leave',
-      avatarColor: '#DC2626',
+      avatarColor: '#D4AF37',
     },
   ];
 
@@ -59,37 +58,34 @@ const RecentAttendance = ({ records, onViewAll }) => {
         return {
           bg: 'var(--status-success-bg)',
           color: 'var(--status-success)',
-          border: 'rgba(22, 134, 106, 0.2)',
+          border: 'var(--status-success-border)',
         };
       case 'Late':
         return {
           bg: 'var(--status-warning-bg)',
           color: 'var(--status-warning)',
-          border: 'rgba(200, 138, 26, 0.2)',
+          border: 'var(--status-warning-border)',
         };
       case 'On Leave':
         return {
-          bg: 'rgba(201, 162, 39, 0.12)',
+          bg: 'var(--champagne-gold-light)',
           color: 'var(--champagne-gold)',
-          border: 'rgba(201, 162, 39, 0.3)',
+          border: 'rgba(212, 175, 55, 0.3)',
         };
       default:
         return {
           bg: 'var(--status-danger-bg)',
           color: 'var(--status-danger)',
-          border: 'rgba(201, 76, 76, 0.2)',
+          border: 'var(--status-danger-border)',
         };
     }
   };
 
   return (
     <div
+      className="nexus-card"
       style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '14px',
-        border: '1px solid var(--border-light)',
-        padding: '22px',
-        boxShadow: 'var(--shadow-sm)',
+        padding: '22px 24px',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
@@ -103,7 +99,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
           justifyContent: 'space-between',
           marginBottom: '18px',
           paddingBottom: '14px',
-          borderBottom: '1px solid var(--border-light)',
+          borderBottom: '1px solid var(--border-subtle)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -111,13 +107,14 @@ const RecentAttendance = ({ records, onViewAll }) => {
             style={{
               padding: '6px',
               borderRadius: '8px',
-              backgroundColor: 'rgba(23, 29, 56, 0.06)',
+              backgroundColor: 'var(--royal-indigo-light)',
               color: 'var(--royal-indigo)',
+              border: '1px solid rgba(91, 95, 239, 0.2)',
             }}
           >
             <AttendanceIcon size={18} />
           </div>
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+          <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
             Recent Attendance
           </h3>
         </div>
@@ -130,12 +127,16 @@ const RecentAttendance = ({ records, onViewAll }) => {
             gap: '6px',
             background: 'transparent',
             border: 'none',
-            color: 'var(--champagne-gold)',
+            color: 'var(--royal-indigo)',
             fontSize: '13px',
             fontWeight: '700',
             cursor: 'pointer',
-            padding: 0,
+            padding: '4px 8px',
+            borderRadius: '6px',
+            transition: 'background-color var(--transition-fast)',
           }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--royal-indigo-light)')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
         >
           <span>View All</span>
           <ArrowRightIcon size={14} />
@@ -143,7 +144,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
       </div>
 
       {/* Table List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
         {list.map((item) => {
           const badge = getStatusBadge(item.status);
           const initials = item.name
@@ -158,14 +159,24 @@ const RecentAttendance = ({ records, onViewAll }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '10px 12px',
-                borderRadius: '10px',
-                border: '1px solid #F1F5F9',
+                padding: '10px 14px',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--border-subtle)',
                 backgroundColor: 'var(--bg-main)',
-                transition: 'background-color var(--transition-fast)',
+                transition: 'all var(--transition-fast)',
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#FFFFFF')}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-main)')}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#FFFFFF';
+                e.currentTarget.style.borderColor = 'rgba(91, 95, 239, 0.2)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--bg-main)';
+                e.currentTarget.style.borderColor = 'var(--border-subtle)';
+                e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
             >
               {/* Employee Avatar & Name */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -173,15 +184,15 @@ const RecentAttendance = ({ records, onViewAll }) => {
                   style={{
                     width: '36px',
                     height: '36px',
-                    borderRadius: '50%',
+                    borderRadius: '10px',
                     backgroundColor: item.avatarColor,
                     color: '#FFFFFF',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '13px',
+                    fontSize: '12.5px',
                     fontWeight: '700',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
                   }}
                 >
                   {initials}
@@ -197,13 +208,13 @@ const RecentAttendance = ({ records, onViewAll }) => {
               </div>
 
               {/* Time & Status Badge */}
-              <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+              <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
                 <span
                   style={{
                     fontSize: '11px',
                     fontWeight: '700',
-                    padding: '3px 8px',
-                    borderRadius: '12px',
+                    padding: '2px 8px',
+                    borderRadius: 'var(--radius-pill)',
                     backgroundColor: badge.bg,
                     color: badge.color,
                     border: `1px solid ${badge.border}`,
@@ -213,7 +224,7 @@ const RecentAttendance = ({ records, onViewAll }) => {
                 >
                   {item.status}
                 </span>
-                <span style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: '500' }}>
+                <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '500' }}>
                   {item.time}
                 </span>
               </div>

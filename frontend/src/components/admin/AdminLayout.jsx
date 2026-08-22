@@ -39,6 +39,7 @@ const AdminLayout = ({ children, currentPath = '/admin/dashboard', onNavigate })
 
   return (
     <div
+      className="nexus-ambient-bg"
       style={{
         minHeight: '100vh',
         backgroundColor: 'var(--bg-main)',

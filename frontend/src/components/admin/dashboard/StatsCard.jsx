@@ -8,40 +8,47 @@ const StatsCard = ({
   trend,
   trendType = 'positive', // 'positive' | 'negative' | 'neutral'
   icon: Icon,
-  accentColor = 'var(--champagne-gold)',
-  badgeBg = 'rgba(201, 162, 39, 0.12)'
+  accentColor = 'var(--royal-indigo)',
+  badgeBg = 'var(--royal-indigo-light)'
 }) => {
-  const getTrendColor = () => {
-    if (trendType === 'positive') return 'var(--status-success)';
-    if (trendType === 'negative') return 'var(--status-danger)';
-    return 'var(--text-secondary)';
+  const getTrendStyle = () => {
+    if (trendType === 'positive') {
+      return {
+        color: 'var(--status-success)',
+        bg: 'var(--status-success-bg)',
+        border: 'var(--status-success-border)',
+      };
+    }
+    if (trendType === 'negative') {
+      return {
+        color: 'var(--status-danger)',
+        bg: 'var(--status-danger-bg)',
+        border: 'var(--status-danger-border)',
+      };
+    }
+    return {
+      color: 'var(--text-secondary)',
+      bg: 'rgba(148, 163, 184, 0.1)',
+      border: 'var(--border-light)',
+    };
   };
+
+  const trendStyle = getTrendStyle();
 
   return (
     <div
+      className="nexus-card nexus-card-interactive"
       style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '14px',
-        border: '1px solid var(--border-light)',
         padding: '22px 24px',
-        boxShadow: 'var(--shadow-sm)',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         position: 'relative',
         overflow: 'hidden',
-        transition: 'transform var(--transition-fast), box-shadow var(--transition-fast)',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-3px)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+        cursor: 'default',
       }}
     >
-      {/* Top Subtle Status Accent Stripe */}
+      {/* Top Subtle Gradient Accent Line */}
       <div
         style={{
           position: 'absolute',
@@ -49,7 +56,7 @@ const StatsCard = ({
           left: 0,
           right: 0,
           height: '3px',
-          backgroundColor: accentColor,
+          background: `linear-gradient(90deg, ${accentColor} 0%, transparent 100%)`,
         }}
       />
 
@@ -57,7 +64,7 @@ const StatsCard = ({
         <div>
           <div
             style={{
-              fontSize: '11px',
+              fontSize: '11.5px',
               fontWeight: '700',
               color: 'var(--text-muted)',
               letterSpacing: '0.08em',
@@ -68,7 +75,7 @@ const StatsCard = ({
           </div>
           <div
             style={{
-              fontSize: '30px',
+              fontSize: '32px',
               fontWeight: '800',
               color: 'var(--text-primary)',
               letterSpacing: '-0.03em',
@@ -93,7 +100,8 @@ const StatsCard = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: `0 0 10px ${badgeBg}`,
+              boxShadow: `0 4px 12px ${badgeBg}`,
+              transition: 'transform var(--transition-fast)',
             }}
           >
             <Icon size={22} />
@@ -107,10 +115,10 @@ const StatsCard = ({
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
+            gap: '8px',
             fontSize: '12.5px',
-            paddingTop: '10px',
-            borderTop: '1px solid #F1F5F9',
+            paddingTop: '12px',
+            borderTop: '1px solid var(--border-subtle)',
           }}
         >
           {trend && (
@@ -119,11 +127,16 @@ const StatsCard = ({
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
-                color: getTrendColor(),
+                color: trendStyle.color,
+                backgroundColor: trendStyle.bg,
+                border: `1px solid ${trendStyle.border}`,
+                padding: '2px 8px',
+                borderRadius: 'var(--radius-pill)',
                 fontWeight: '700',
+                fontSize: '11.5px',
               }}
             >
-              <TrendingUpIcon size={14} />
+              <TrendingUpIcon size={12} />
               {trend}
             </span>
           )}

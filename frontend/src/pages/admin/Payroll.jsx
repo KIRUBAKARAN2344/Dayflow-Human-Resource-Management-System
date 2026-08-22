@@ -21,12 +21,12 @@ const Toast = ({ message, type }) => {
         bottom: '28px',
         right: '28px',
         padding: '14px 20px',
-        borderRadius: '10px',
+        borderRadius: 'var(--radius-md)',
         backgroundColor: type === 'success' ? 'var(--status-success)' : 'var(--status-danger)',
         color: '#FFFFFF',
         fontWeight: '700',
         fontSize: '13.5px',
-        boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+        boxShadow: 'var(--shadow-lg)',
         zIndex: 9999,
         maxWidth: '360px',
       }}
@@ -102,53 +102,42 @@ const Payroll = () => {
   const isAllProcessed = stats && stats.pendingCount === 0;
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Page Header */}
       <PageHeader
-        title="Payroll Management"
-        description="Manage employee salaries, allowances, deductions, and payslip processing."
-        breadcrumb="Finance & HR / Payroll"
+        title="Payroll & Compensation"
+        description="Oversee workforce compensation, tax deductions, and executive payslip disbursals."
+        breadcrumb="Finance / Payroll"
         actionButton={
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <button
+              type="button"
               onClick={refresh}
+              className="nexus-btn-secondary"
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                backgroundColor: 'var(--bg-main)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-light)',
-                padding: '10px 14px',
-                borderRadius: '8px',
+                padding: '9px 16px',
                 fontSize: '13px',
-                fontWeight: '600',
-                cursor: 'pointer',
+                borderRadius: 'var(--radius-md)',
               }}
             >
               ↻ Refresh
             </button>
 
             <button
+              type="button"
               onClick={() => setIsProcessModalOpen(true)}
               disabled={isAllProcessed}
+              className={isAllProcessed ? 'nexus-btn-secondary' : 'nexus-btn-primary'}
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                backgroundColor: isAllProcessed ? '#CBD5E1' : 'var(--navy-deep)',
-                color: isAllProcessed ? '#64748B' : 'var(--champagne-gold)',
-                border: isAllProcessed ? '1px solid #CBD5E1' : '1px solid var(--champagne-gold)',
-                padding: '10px 18px',
-                borderRadius: '8px',
-                fontSize: '13.5px',
-                fontWeight: '700',
+                padding: '9px 20px',
+                fontSize: '13px',
+                borderRadius: 'var(--radius-md)',
+                opacity: isAllProcessed ? 0.6 : 1,
                 cursor: isAllProcessed ? 'not-allowed' : 'pointer',
-                boxShadow: isAllProcessed ? 'none' : 'var(--shadow-sm)',
               }}
             >
               <PayrollIcon size={16} />
-              <span>{isAllProcessed ? 'Payroll Processed' : 'Process Payroll'}</span>
+              <span>{isAllProcessed ? 'Payroll Finalized' : 'Process Payroll'}</span>
             </button>
           </div>
         }
@@ -176,7 +165,7 @@ const Payroll = () => {
       {loading && <Loading message="Loading payroll records..." />}
       {error && <ErrorMessage message={error} onRetry={refresh} />}
 
-      {/* Main Payroll Table */}
+      {/* Payroll Table */}
       {!loading && (
         <PayrollTable
           records={paginatedRecords}
@@ -189,7 +178,7 @@ const Payroll = () => {
         />
       )}
 
-      {/* Payslip Details Modal */}
+      {/* Payslip Breakdown Modal */}
       <SalaryBreakdown
         isOpen={isPayslipOpen}
         onClose={handleClosePayslip}
@@ -206,7 +195,7 @@ const Payroll = () => {
         isSubmitting={isProcessing}
       />
 
-      {/* Toast Notification */}
+      {/* Toast */}
       <Toast message={toast.message} type={toast.type} />
     </div>
   );

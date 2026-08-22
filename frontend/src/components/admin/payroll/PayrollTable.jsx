@@ -22,17 +22,9 @@ const PayrollTable = ({
         actionButton={
           onResetFilters && (
             <button
+              type="button"
               onClick={onResetFilters}
-              style={{
-                backgroundColor: 'var(--navy-deep)',
-                color: 'var(--champagne-gold)',
-                border: '1px solid var(--champagne-gold)',
-                padding: '8px 16px',
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: '700',
-                cursor: 'pointer',
-              }}
+              className="nexus-btn-primary"
             >
               Reset Filters
             </button>
@@ -43,37 +35,13 @@ const PayrollTable = ({
   }
 
   return (
-    <div
-      style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '14px',
-        border: '1px solid var(--border-light)',
-        boxShadow: 'var(--shadow-sm)',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="nexus-table-wrapper">
       <div style={{ overflowX: 'auto' }}>
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            textAlign: 'left',
-            fontSize: '13px',
-          }}
-        >
+        <table className="nexus-table">
           <thead>
-            <tr
-              style={{
-                backgroundColor: 'var(--navy-deep)',
-                color: '#FFFFFF',
-                fontSize: '11.5px',
-                fontWeight: '700',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-              }}
-            >
-              <th style={{ padding: '14px 20px' }}>Employee</th>
-              <th style={{ padding: '14px 14px' }}>ID</th>
+            <tr>
+              <th style={{ padding: '14px 22px' }}>Employee</th>
+              <th style={{ padding: '14px 14px' }}>Employee ID</th>
               <th style={{ padding: '14px 14px' }}>Department</th>
               <th style={{ padding: '14px 14px', textAlign: 'right' }}>Basic Salary</th>
               <th style={{ padding: '14px 14px', textAlign: 'right' }}>Allowances</th>
@@ -81,7 +49,7 @@ const PayrollTable = ({
               <th style={{ padding: '14px 14px', textAlign: 'right' }}>Deductions</th>
               <th style={{ padding: '14px 14px', textAlign: 'right' }}>Net Salary</th>
               <th style={{ padding: '14px 14px', textAlign: 'center' }}>Status</th>
-              <th style={{ padding: '14px 20px', textAlign: 'right' }}>Action</th>
+              <th style={{ padding: '14px 22px', textAlign: 'right' }}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -97,29 +65,20 @@ const PayrollTable = ({
                 <tr
                   key={rec.id}
                   style={{
-                    borderBottom:
-                      idx === records.length - 1 ? 'none' : '1px solid var(--border-light)',
-                    backgroundColor:
-                      idx % 2 === 0 ? '#FFFFFF' : 'rgba(246, 247, 251, 0.5)',
-                    transition: 'background-color var(--transition-fast)',
+                    backgroundColor: idx % 2 === 0 ? '#FFFFFF' : 'rgba(248, 250, 252, 0.6)',
                   }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.backgroundColor = 'rgba(201, 162, 39, 0.04)')
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.backgroundColor =
-                      idx % 2 === 0 ? '#FFFFFF' : 'rgba(246, 247, 251, 0.5)')
-                  }
                 >
                   {/* Employee Name + Avatar */}
-                  <td style={{ padding: '13px 20px' }}>
+                  <td style={{ padding: '13px 22px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <div
                         style={{
                           width: '34px',
                           height: '34px',
-                          borderRadius: '50%',
-                          backgroundColor: rec.avatarColor || 'var(--royal-indigo)',
+                          borderRadius: '10px',
+                          background: rec.avatarColor
+                            ? `linear-gradient(135deg, ${rec.avatarColor} 0%, #171D38 100%)`
+                            : 'linear-gradient(135deg, var(--royal-indigo) 0%, var(--royal-violet) 100%)',
                           color: '#FFFFFF',
                           display: 'flex',
                           alignItems: 'center',
@@ -127,6 +86,7 @@ const PayrollTable = ({
                           fontSize: '12px',
                           fontWeight: '700',
                           flexShrink: 0,
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                         }}
                       >
                         {initials}
@@ -136,13 +96,10 @@ const PayrollTable = ({
                           style={{
                             fontWeight: '700',
                             color: 'var(--text-primary)',
-                            fontSize: '13px',
+                            fontSize: '13.5px',
                           }}
                         >
                           {rec.employeeName}
-                        </div>
-                        <div style={{ fontSize: '11.5px', color: 'var(--text-secondary)' }}>
-                          {rec.designation}
                         </div>
                       </div>
                     </div>
@@ -162,41 +119,74 @@ const PayrollTable = ({
                   </td>
 
                   {/* Department */}
-                  <td style={{ padding: '13px 14px', color: 'var(--text-secondary)' }}>
-                    {rec.department}
+                  <td style={{ padding: '13px 14px', color: 'var(--text-primary)', fontWeight: '600' }}>
+                    <span style={{ padding: '2px 8px', borderRadius: '6px', backgroundColor: 'var(--bg-main)', border: '1px solid var(--border-subtle)', fontSize: '12px' }}>
+                      {rec.department}
+                    </span>
                   </td>
 
-                  {/* Basic Salary */}
-                  <td style={{ padding: '13px 14px', textAlign: 'right', fontWeight: '600', color: 'var(--text-primary)' }}>
+                  {/* Basic */}
+                  <td
+                    style={{
+                      padding: '13px 14px',
+                      textAlign: 'right',
+                      color: 'var(--text-secondary)',
+                      fontSize: '13px',
+                    }}
+                  >
                     {formatCurrency(rec.basicSalary)}
                   </td>
 
                   {/* Allowances */}
-                  <td style={{ padding: '13px 14px', textAlign: 'right', color: 'var(--status-info)', fontWeight: '600' }}>
-                    +{formatCurrency(rec.totalAllowances)}
+                  <td
+                    style={{
+                      padding: '13px 14px',
+                      textAlign: 'right',
+                      color: 'var(--status-info)',
+                      fontSize: '13px',
+                      fontWeight: '600',
+                    }}
+                  >
+                    +{formatCurrency(rec.hra + rec.transportAllowance + rec.medicalAllowance + rec.otherAllowances)}
                   </td>
 
-                  {/* Gross Salary */}
-                  <td style={{ padding: '13px 14px', textAlign: 'right', fontWeight: '700', color: 'var(--text-primary)' }}>
+                  {/* Gross */}
+                  <td
+                    style={{
+                      padding: '13px 14px',
+                      textAlign: 'right',
+                      fontWeight: '700',
+                      color: 'var(--text-primary)',
+                      fontSize: '13px',
+                    }}
+                  >
                     {formatCurrency(rec.grossSalary)}
                   </td>
 
                   {/* Deductions */}
-                  <td style={{ padding: '13px 14px', textAlign: 'right', color: 'var(--status-danger)', fontWeight: '600' }}>
+                  <td
+                    style={{
+                      padding: '13px 14px',
+                      textAlign: 'right',
+                      color: 'var(--status-danger)',
+                      fontSize: '13px',
+                      fontWeight: '600',
+                    }}
+                  >
                     -{formatCurrency(rec.totalDeductions)}
                   </td>
 
-                  {/* Net Salary */}
-                  <td style={{ padding: '13px 14px', textAlign: 'right' }}>
-                    <span
-                      style={{
-                        fontWeight: '800',
-                        fontSize: '13.5px',
-                        color: 'var(--champagne-gold)',
-                      }}
-                    >
-                      {formatCurrency(rec.netSalary)}
-                    </span>
+                  {/* Net */}
+                  <td
+                    style={{
+                      padding: '13px 14px',
+                      textAlign: 'right',
+                      fontWeight: '800',
+                      color: 'var(--champagne-gold)',
+                      fontSize: '14px',
+                    }}
+                  >
+                    {formatCurrency(rec.netSalary)}
                   </td>
 
                   {/* Status */}
@@ -205,22 +195,18 @@ const PayrollTable = ({
                   </td>
 
                   {/* Action */}
-                  <td style={{ padding: '13px 20px', textAlign: 'right' }}>
+                  <td style={{ padding: '13px 22px', textAlign: 'right' }}>
                     <button
+                      type="button"
                       onClick={() => onViewPayslip(rec)}
+                      className="nexus-btn-gold"
                       style={{
-                        padding: '6px 12px',
-                        borderRadius: '6px',
-                        border: '1px solid var(--champagne-gold)',
-                        backgroundColor: 'rgba(201, 162, 39, 0.08)',
-                        color: 'var(--navy-deep)',
+                        padding: '4px 11px',
                         fontSize: '12px',
-                        fontWeight: '700',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
+                        borderRadius: 'var(--radius-sm)',
                       }}
                     >
-                      View Payslip
+                      Payslip
                     </button>
                   </td>
                 </tr>
@@ -230,74 +216,52 @@ const PayrollTable = ({
         </table>
       </div>
 
-      {/* Footer + Pagination */}
+      {/* Pagination Footer */}
       <div
         style={{
-          padding: '12px 20px',
-          backgroundColor: 'var(--bg-main)',
+          padding: '14px 22px',
+          backgroundColor: 'var(--bg-surface-subtle)',
           borderTop: '1px solid var(--border-light)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '12px',
+          fontSize: '12.5px',
+          color: 'var(--text-secondary)',
         }}
       >
-        <span style={{ fontSize: '12.5px', color: 'var(--text-secondary)' }}>
-          Showing <strong>{records.length}</strong> of <strong>{totalCount}</strong> payroll record{totalCount !== 1 ? 's' : ''}
+        <span>
+          Showing <strong>{records.length}</strong> of <strong>{totalCount}</strong> payroll records
         </span>
 
         {totalPages > 1 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <button
-              onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
+              type="button"
+              disabled={currentPage <= 1}
+              onClick={() => onPageChange(currentPage - 1)}
+              className="nexus-btn-secondary"
               style={{
-                padding: '5px 12px',
-                borderRadius: '6px',
-                border: '1px solid var(--border-light)',
-                backgroundColor: currentPage === 1 ? 'var(--bg-main)' : '#FFFFFF',
-                color: currentPage === 1 ? 'var(--text-muted)' : 'var(--text-primary)',
-                fontSize: '12.5px',
-                fontWeight: '600',
-                cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                padding: '4px 10px',
+                fontSize: '12px',
+                opacity: currentPage <= 1 ? 0.5 : 1,
               }}
             >
               Previous
             </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => onPageChange(page)}
-                style={{
-                  padding: '5px 10px',
-                  borderRadius: '6px',
-                  border: `1px solid ${
-                    currentPage === page ? 'var(--champagne-gold)' : 'var(--border-light)'
-                  }`,
-                  backgroundColor: currentPage === page ? 'var(--navy-deep)' : '#FFFFFF',
-                  color: currentPage === page ? 'var(--champagne-gold)' : 'var(--text-primary)',
-                  fontSize: '12.5px',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  minWidth: '32px',
-                }}
-              >
-                {page}
-              </button>
-            ))}
+            <span style={{ padding: '0 8px', fontWeight: '700', color: 'var(--text-primary)' }}>
+              {currentPage} / {totalPages}
+            </span>
             <button
-              onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
+              type="button"
+              disabled={currentPage >= totalPages}
+              onClick={() => onPageChange(currentPage + 1)}
+              className="nexus-btn-secondary"
               style={{
-                padding: '5px 12px',
-                borderRadius: '6px',
-                border: '1px solid var(--border-light)',
-                backgroundColor: currentPage === totalPages ? 'var(--bg-main)' : '#FFFFFF',
-                color: currentPage === totalPages ? 'var(--text-muted)' : 'var(--text-primary)',
-                fontSize: '12.5px',
-                fontWeight: '600',
-                cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                padding: '4px 10px',
+                fontSize: '12px',
+                opacity: currentPage >= totalPages ? 0.5 : 1,
               }}
             >
               Next

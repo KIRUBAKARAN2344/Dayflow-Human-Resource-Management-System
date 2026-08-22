@@ -45,26 +45,11 @@ const PayrollFilters = ({
     statusFilter !== 'All' ||
     salaryRangeFilter !== 'All';
 
-  const selectStyle = {
-    padding: '9px 12px',
-    borderRadius: '8px',
-    border: '1px solid var(--border-light)',
-    backgroundColor: '#FFFFFF',
-    fontSize: '13px',
-    color: 'var(--text-primary)',
-    outline: 'none',
-    cursor: 'pointer',
-    boxShadow: 'var(--shadow-sm)',
-  };
-
   return (
     <div
+      className="nexus-card"
       style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        border: '1px solid var(--border-light)',
         padding: '16px 20px',
-        boxShadow: 'var(--shadow-sm)',
         marginBottom: '20px',
       }}
     >
@@ -84,12 +69,16 @@ const PayrollFilters = ({
           <select
             value={selectedMonth}
             onChange={(e) => onMonthChange(e.target.value)}
+            className="nexus-input"
             style={{
-              ...selectStyle,
+              width: 'auto',
+              padding: '8px 12px',
+              fontSize: '13px',
               fontWeight: '700',
-              borderColor: 'var(--champagne-gold)',
-              backgroundColor: 'rgba(201, 162, 39, 0.06)',
-              color: 'var(--navy-deep)',
+              borderColor: 'rgba(212, 175, 55, 0.4)',
+              backgroundColor: 'var(--champagne-gold-light)',
+              color: 'var(--midnight-navy)',
+              cursor: 'pointer',
             }}
           >
             {MONTH_OPTIONS.map((opt) => (
@@ -118,28 +107,18 @@ const PayrollFilters = ({
             placeholder="Search employee, ID, department..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '9px 34px 9px 36px',
-              borderRadius: '8px',
-              border: '1px solid var(--border-light)',
-              backgroundColor: 'var(--bg-main)',
+              paddingLeft: '36px',
+              paddingRight: searchTerm ? '32px' : '14px',
+              paddingTop: '8px',
+              paddingBottom: '8px',
               fontSize: '13px',
-              color: 'var(--text-primary)',
-              outline: 'none',
-              boxSizing: 'border-box',
-            }}
-            onFocus={(e) => {
-              e.target.style.borderColor = 'var(--champagne-gold)';
-              e.target.style.boxShadow = '0 0 0 3px var(--champagne-gold-light)';
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = 'var(--border-light)';
-              e.target.style.boxShadow = 'none';
             }}
           />
           {searchTerm && (
             <button
+              type="button"
               onClick={() => onSearchChange('')}
               style={{
                 position: 'absolute',
@@ -162,7 +141,8 @@ const PayrollFilters = ({
         <select
           value={departmentFilter}
           onChange={(e) => onDepartmentChange(e.target.value)}
-          style={selectStyle}
+          className="nexus-input"
+          style={{ width: 'auto', padding: '8px 12px', fontSize: '13px', cursor: 'pointer' }}
         >
           {DEPARTMENTS.map((dept) => (
             <option key={dept} value={dept}>
@@ -175,7 +155,8 @@ const PayrollFilters = ({
         <select
           value={statusFilter}
           onChange={(e) => onStatusChange(e.target.value)}
-          style={selectStyle}
+          className="nexus-input"
+          style={{ width: 'auto', padding: '8px 12px', fontSize: '13px', cursor: 'pointer' }}
         >
           {STATUSES.map((st) => (
             <option key={st} value={st}>
@@ -188,7 +169,8 @@ const PayrollFilters = ({
         <select
           value={salaryRangeFilter}
           onChange={(e) => onSalaryRangeChange(e.target.value)}
-          style={selectStyle}
+          className="nexus-input"
+          style={{ width: 'auto', padding: '8px 12px', fontSize: '13px', cursor: 'pointer' }}
         >
           {SALARY_RANGES.map((range) => (
             <option key={range} value={range}>
@@ -200,25 +182,13 @@ const PayrollFilters = ({
         {/* Reset Filters */}
         {hasActiveFilters && (
           <button
+            type="button"
             onClick={onReset}
+            className="nexus-btn-secondary"
             style={{
-              background: 'transparent',
-              border: '1px solid var(--border-light)',
-              color: 'var(--text-secondary)',
-              padding: '8px 14px',
-              borderRadius: '8px',
+              padding: '7px 14px',
               fontSize: '12.5px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--bg-main)';
-              e.currentTarget.style.color = 'var(--text-primary)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = 'var(--text-secondary)';
+              borderRadius: 'var(--radius-sm)',
             }}
           >
             Clear All

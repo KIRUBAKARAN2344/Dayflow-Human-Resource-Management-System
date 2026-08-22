@@ -313,54 +313,59 @@ const Sidebar = ({
                         gap: '12px',
                         padding: isCollapsed ? '12px 0' : '11px 14px',
                         justifyContent: isCollapsed ? 'center' : 'flex-start',
-                        borderRadius: '8px',
+                        borderRadius: '10px',
                         textDecoration: 'none',
                         color: active ? '#FFFFFF' : 'var(--text-muted)',
-                        backgroundColor: active ? 'var(--royal-indigo)' : 'transparent',
+                        background: active
+                          ? 'linear-gradient(135deg, rgba(91, 95, 239, 0.9) 0%, rgba(124, 92, 252, 0.85) 100%)'
+                          : 'transparent',
                         fontWeight: active ? '600' : '500',
-                        fontSize: '14px',
+                        fontSize: '13.5px',
                         transition: 'all var(--transition-fast)',
-                        boxShadow: active ? '0 2px 8px rgba(0, 0, 0, 0.2)' : 'none',
+                        boxShadow: active ? '0 4px 12px rgba(91, 95, 239, 0.35)' : 'none',
+                        border: active ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid transparent',
                       }}
                       onMouseEnter={(e) => {
                         if (!active) {
-                          e.currentTarget.style.backgroundColor = 'rgba(23, 29, 56, 0.6)';
-                          e.currentTarget.style.color = '#F1F5F9';
+                          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                          e.currentTarget.style.color = '#F8FAFC';
+                          e.currentTarget.style.transform = 'translateX(3px)';
                         }
                       }}
                       onMouseLeave={(e) => {
                         if (!active) {
                           e.currentTarget.style.backgroundColor = 'transparent';
                           e.currentTarget.style.color = 'var(--text-muted)';
+                          e.currentTarget.style.transform = 'translateX(0)';
                         }
                       }}
                     >
-                      {/* Active Accent Bar */}
+                      {/* Active Accent Glow Bar */}
                       {active && (
                         <div
                           style={{
                             position: 'absolute',
                             left: 0,
-                            top: '15%',
-                            bottom: '15%',
+                            top: '18%',
+                            bottom: '18%',
                             width: '3.5px',
                             backgroundColor: 'var(--champagne-gold)',
                             borderRadius: '0 4px 4px 0',
-                            boxShadow: '0 0 8px var(--champagne-gold)',
+                            boxShadow: '0 0 10px var(--champagne-gold)',
                           }}
                         />
                       )}
 
                       <Icon
-                        size={20}
+                        size={19}
                         style={{
-                          color: active ? 'var(--champagne-gold)' : 'inherit',
+                          color: active ? '#FFFFFF' : 'inherit',
                           transition: 'color var(--transition-fast)',
                         }}
                       />
 
                       {!isCollapsed && (
-                        <span style={{ whiteSpace: 'nowrap', flex: 1 }}>
+                        <span style={{ whiteSpace: 'nowrap', flex: 1, letterSpacing: '-0.01em' }}>
                           {item.label}
                         </span>
                       )}

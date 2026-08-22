@@ -25,12 +25,19 @@ const PageHeader = ({
         {breadcrumb && (
           <div
             style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: 'var(--champagne-gold)',
-              letterSpacing: '0.05em',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontSize: '11px',
+              fontWeight: '700',
+              color: 'var(--royal-indigo)',
+              backgroundColor: 'var(--royal-indigo-light)',
+              padding: '3px 10px',
+              borderRadius: 'var(--radius-pill)',
+              letterSpacing: '0.06em',
               textTransform: 'uppercase',
-              marginBottom: '6px',
+              marginBottom: '8px',
+              border: '1px solid rgba(91, 95, 239, 0.2)',
             }}
           >
             {breadcrumb}
@@ -40,10 +47,10 @@ const PageHeader = ({
         {/* Page Title */}
         <h1
           style={{
-            fontSize: '26px',
+            fontSize: '28px',
             fontWeight: '800',
             color: 'var(--text-primary)',
-            letterSpacing: '-0.025em',
+            letterSpacing: '-0.03em',
             lineHeight: '1.2',
             margin: 0,
           }}
@@ -59,7 +66,8 @@ const PageHeader = ({
               color: 'var(--text-secondary)',
               marginTop: '6px',
               marginBottom: 0,
-              maxWidth: '600px',
+              maxWidth: '650px',
+              lineHeight: '1.5',
             }}
           >
             {description}

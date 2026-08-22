@@ -25,14 +25,14 @@ const Toast = ({ message, type }) => {
         bottom: '28px',
         right: '28px',
         padding: '14px 20px',
-        borderRadius: '10px',
+        borderRadius: 'var(--radius-md)',
         backgroundColor: type === 'success' ? 'var(--status-success)' : 'var(--status-danger)',
         color: '#FFFFFF',
         fontWeight: '700',
         fontSize: '13.5px',
-        boxShadow: '0 8px 20px rgba(0,0,0,0.2)',
+        boxShadow: 'var(--shadow-lg)',
         zIndex: 9999,
-        maxWidth: '340px',
+        maxWidth: '360px',
       }}
     >
       {type === 'success' ? '✓ ' : '⚠ '}{message}
@@ -43,12 +43,9 @@ const Toast = ({ message, type }) => {
 // ── Summary KPI Card ──────────────────────────────────────────────
 const SummaryCard = ({ title, count, subtitle, icon: Icon, accent, badgeBg }) => (
   <div
+    className="nexus-card nexus-card-interactive"
     style={{
-      backgroundColor: '#FFFFFF',
-      borderRadius: '12px',
-      border: '1px solid var(--border-light)',
       padding: '18px 20px',
-      boxShadow: 'var(--shadow-sm)',
       position: 'relative',
       overflow: 'hidden',
       display: 'flex',
@@ -73,7 +70,7 @@ const SummaryCard = ({ title, count, subtitle, icon: Icon, accent, badgeBg }) =>
       <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--text-primary)', letterSpacing: '-0.02em', marginTop: '2px', lineHeight: '1.1' }}>
         {count ?? '—'}
       </div>
-      <div style={{ fontSize: '11.5px', color: 'var(--text-secondary)', marginTop: '4px' }}>{subtitle}</div>
+      <div style={{ fontSize: '11.5px', color: 'var(--text-secondary)', marginTop: '4px', fontWeight: '500' }}>{subtitle}</div>
     </div>
     <div
       style={{
@@ -86,6 +83,7 @@ const SummaryCard = ({ title, count, subtitle, icon: Icon, accent, badgeBg }) =>
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        boxShadow: `0 2px 8px ${badgeBg}`,
       }}
     >
       <Icon size={20} />
@@ -103,28 +101,35 @@ const LeaveStatsBar = ({ stats }) => {
 
   return (
     <div
+      className="nexus-card"
       style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '12px',
-        border: '1px solid var(--border-light)',
-        padding: '16px 20px',
-        boxShadow: 'var(--shadow-sm)',
+        padding: '18px 22px',
         marginBottom: '20px',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-        <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)' }}>
-          Leave Request Distribution
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+        <span style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+          Leave Request Approval Distribution
         </span>
-        <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--champagne-gold)' }}>
-          Approval Rate: {approvedPct}%
+        <span
+          style={{
+            fontSize: '12px',
+            fontWeight: '700',
+            color: 'var(--status-success)',
+            backgroundColor: 'var(--status-success-bg)',
+            padding: '3px 10px',
+            borderRadius: 'var(--radius-pill)',
+            border: '1px solid var(--status-success-border)',
+          }}
+        >
+          {approvedPct}% Approval Rate
         </span>
       </div>
 
-      <div style={{ height: '10px', borderRadius: '5px', backgroundColor: '#E2E8F0', display: 'flex', overflow: 'hidden', gap: '2px', marginBottom: '12px' }}>
-        <div style={{ width: `${approvedPct}%`, backgroundColor: 'var(--status-success)' }} title={`Approved: ${approvedPct}%`} />
-        <div style={{ width: `${pendingPct}%`, backgroundColor: 'var(--status-warning)' }} title={`Pending: ${pendingPct}%`} />
-        <div style={{ width: `${rejectedPct}%`, backgroundColor: 'var(--status-danger)' }} title={`Rejected: ${rejectedPct}%`} />
+      <div style={{ height: '10px', borderRadius: 'var(--radius-pill)', backgroundColor: 'var(--border-subtle)', display: 'flex', overflow: 'hidden', gap: '2px', marginBottom: '14px' }}>
+        <div style={{ width: `${approvedPct}%`, background: 'linear-gradient(90deg, #10B981 0%, #34D399 100%)', transition: 'width var(--transition-normal)' }} title={`Approved: ${approvedPct}%`} />
+        <div style={{ width: `${pendingPct}%`, background: 'linear-gradient(90deg, #F59E0B 0%, #FBBF24 100%)', transition: 'width var(--transition-normal)' }} title={`Pending: ${pendingPct}%`} />
+        <div style={{ width: `${rejectedPct}%`, background: 'linear-gradient(90deg, #EF4444 0%, #F87171 100%)', transition: 'width var(--transition-normal)' }} title={`Rejected: ${rejectedPct}%`} />
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px', fontSize: '12px', flexWrap: 'wrap' }}>
@@ -134,7 +139,7 @@ const LeaveStatsBar = ({ stats }) => {
           { label: `Rejected (${rejectedPct}%)`, color: 'var(--status-danger)' },
         ].map(({ label, color }) => (
           <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: color }} />
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: color, boxShadow: `0 0 6px ${color}` }} />
             <span style={{ color: 'var(--text-secondary)' }}>{label}</span>
           </div>
         ))}
@@ -217,35 +222,29 @@ const LeaveRequests = () => {
   };
 
   const summaryCards = [
-    { title: 'Total Requests', count: stats?.total, subtitle: 'All leave submissions', icon: LeaveIcon, accent: 'var(--royal-indigo)', badgeBg: 'rgba(23,29,56,0.08)' },
+    { title: 'Total Requests', count: stats?.total, subtitle: 'All leave submissions', icon: LeaveIcon, accent: 'var(--royal-indigo)', badgeBg: 'var(--royal-indigo-light)' },
     { title: 'Pending', count: stats?.pending, subtitle: 'Awaiting HR decision', icon: ClockIcon, accent: 'var(--status-warning)', badgeBg: 'var(--status-warning-bg)' },
     { title: 'Approved', count: stats?.approved, subtitle: 'Successfully approved', icon: AttendanceIcon, accent: 'var(--status-success)', badgeBg: 'var(--status-success-bg)' },
     { title: 'Rejected', count: stats?.rejected, subtitle: 'Not approved by HR', icon: ShieldIcon, accent: 'var(--status-danger)', badgeBg: 'var(--status-danger-bg)' },
-    { title: 'On Leave Today', count: stats?.onLeaveToday, subtitle: 'Currently on approved leave', icon: EmployeesIcon, accent: 'var(--champagne-gold)', badgeBg: 'rgba(201,162,39,0.12)' },
+    { title: 'On Leave Today', count: stats?.onLeaveToday, subtitle: 'Currently on approved leave', icon: EmployeesIcon, accent: 'var(--champagne-gold)', badgeBg: 'var(--champagne-gold-light)' },
   ];
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Page Header */}
       <PageHeader
         title="Leave Management"
-        description="Review, approve, and reject employee leave requests with full HR workflow."
-        breadcrumb="HR Operations / Leave Management"
+        description="Review, approve, and reject workforce leave requests with full HR executive workflow."
+        breadcrumb="Operations / Leave Management"
         actionButton={
           <button
+            type="button"
             onClick={refresh}
+            className="nexus-btn-secondary"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              backgroundColor: 'var(--navy-deep)',
-              color: 'var(--champagne-gold)',
-              border: '1px solid var(--champagne-gold)',
-              padding: '10px 18px',
-              borderRadius: '8px',
-              fontSize: '13.5px',
-              fontWeight: '700',
-              cursor: 'pointer',
+              padding: '9px 18px',
+              fontSize: '13px',
+              borderRadius: 'var(--radius-md)',
             }}
           >
             ↻ Refresh

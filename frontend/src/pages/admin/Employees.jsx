@@ -96,32 +96,22 @@ const Employees = ({ onNavigate }) => {
   const inactiveCount = employees.filter((e) => e.status === 'Inactive').length;
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Page Header */}
       <PageHeader
         title="Employee Directory"
-        description="Manage workforce records, profiles, and employment status."
-        breadcrumb="People / Employees"
+        description="Manage workforce records, profiles, roles, and employment status."
+        breadcrumb="People / Directory"
         actionButton={
           <button
+            type="button"
             onClick={handleOpenAdd}
+            className="nexus-btn-primary"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              backgroundColor: 'var(--navy-deep)',
-              color: 'var(--champagne-gold)',
-              border: '1px solid var(--champagne-gold)',
-              padding: '10px 18px',
-              borderRadius: '8px',
+              padding: '10px 20px',
               fontSize: '13.5px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              boxShadow: 'var(--shadow-sm)',
-              transition: 'all var(--transition-fast)',
+              borderRadius: 'var(--radius-md)',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--royal-indigo)')}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--navy-deep)')}
           >
             <PlusIcon size={16} />
             <span>Add Employee</span>
@@ -140,49 +130,40 @@ const Employees = ({ onNavigate }) => {
         }}
       >
         <div
+          className="nexus-card"
           style={{
-            padding: '10px 16px',
-            borderRadius: '10px',
-            backgroundColor: '#FFFFFF',
-            border: '1px solid var(--border-light)',
+            padding: '10px 18px',
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <EmployeesIcon size={18} style={{ color: 'var(--royal-indigo)' }} />
           <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Total Employees:</span>
-          <strong style={{ fontSize: '15px', color: 'var(--text-primary)' }}>{totalCount}</strong>
+          <strong style={{ fontSize: '15px', color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{totalCount}</strong>
         </div>
 
         <div
+          className="nexus-card"
           style={{
-            padding: '10px 16px',
-            borderRadius: '10px',
-            backgroundColor: '#FFFFFF',
-            border: '1px solid var(--border-light)',
+            padding: '10px 18px',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-success)' }} />
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--status-success)', boxShadow: '0 0 6px var(--status-success)' }} />
           <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>Active:</span>
           <strong style={{ fontSize: '15px', color: 'var(--status-success)' }}>{activeCount}</strong>
         </div>
 
         <div
+          className="nexus-card"
           style={{
-            padding: '10px 16px',
-            borderRadius: '10px',
-            backgroundColor: '#FFFFFF',
-            border: '1px solid var(--border-light)',
+            padding: '10px 18px',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--text-muted)' }} />
@@ -231,7 +212,7 @@ const Employees = ({ onNavigate }) => {
       <Modal
         isOpen={isFormModalOpen}
         onClose={handleCloseFormModal}
-        title={editingEmployee ? `Edit Employee (${editingEmployee.id})` : 'Add New Employee'}
+        title={editingEmployee ? `Edit Employee (${editingEmployee.id})` : 'Register New Employee'}
         maxWidth="640px"
       >
         <EmployeeForm

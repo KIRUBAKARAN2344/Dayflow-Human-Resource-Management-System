@@ -17,17 +17,9 @@ const EmployeeTable = ({
         actionButton={
           onResetFilters && (
             <button
+              type="button"
               onClick={onResetFilters}
-              style={{
-                backgroundColor: 'var(--navy-deep)',
-                color: 'var(--champagne-gold)',
-                border: '1px solid var(--champagne-gold)',
-                padding: '8px 16px',
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: '700',
-                cursor: 'pointer',
-              }}
+              className="nexus-btn-primary"
             >
               Reset Filters
             </button>
@@ -38,43 +30,18 @@ const EmployeeTable = ({
   }
 
   return (
-    <div
-      style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '14px',
-        border: '1px solid var(--border-light)',
-        boxShadow: 'var(--shadow-sm)',
-        overflow: 'hidden',
-      }}
-    >
+    <div className="nexus-table-wrapper">
       <div style={{ overflowX: 'auto' }}>
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            textAlign: 'left',
-            fontSize: '13.5px',
-          }}
-        >
+        <table className="nexus-table">
           <thead>
-            <tr
-              style={{
-                backgroundColor: 'var(--navy-deep)',
-                color: '#FFFFFF',
-                fontSize: '12px',
-                fontWeight: '700',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                borderBottom: '1px solid var(--border-dark)',
-              }}
-            >
-              <th style={{ padding: '14px 20px' }}>Employee</th>
-              <th style={{ padding: '14px 16px' }}>ID</th>
+            <tr>
+              <th style={{ padding: '14px 22px' }}>Employee</th>
+              <th style={{ padding: '14px 16px' }}>Employee ID</th>
               <th style={{ padding: '14px 16px' }}>Department</th>
               <th style={{ padding: '14px 16px' }}>Job Title</th>
               <th style={{ padding: '14px 16px' }}>Joining Date</th>
               <th style={{ padding: '14px 16px' }}>Status</th>
-              <th style={{ padding: '14px 20px', textAlign: 'right' }}>Actions</th>
+              <th style={{ padding: '14px 22px', textAlign: 'right' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -90,32 +57,27 @@ const EmployeeTable = ({
                 <tr
                   key={emp.id}
                   style={{
-                    borderBottom: idx === employees.length - 1 ? 'none' : '1px solid var(--border-light)',
-                    backgroundColor: idx % 2 === 0 ? '#FFFFFF' : 'rgba(246, 247, 251, 0.5)',
-                    transition: 'background-color var(--transition-fast)',
+                    backgroundColor: idx % 2 === 0 ? '#FFFFFF' : 'rgba(248, 250, 252, 0.6)',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(201, 162, 39, 0.04)')}
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.backgroundColor =
-                      idx % 2 === 0 ? '#FFFFFF' : 'rgba(246, 247, 251, 0.5)')
-                  }
                 >
                   {/* Name & Avatar */}
-                  <td style={{ padding: '14px 20px' }}>
+                  <td style={{ padding: '14px 22px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <div
                         style={{
                           width: '38px',
                           height: '38px',
-                          borderRadius: '50%',
-                          backgroundColor: emp.avatarColor || 'var(--royal-indigo)',
+                          borderRadius: '10px',
+                          background: emp.avatarColor
+                            ? `linear-gradient(135deg, ${emp.avatarColor} 0%, #171D38 100%)`
+                            : 'linear-gradient(135deg, var(--royal-indigo) 0%, var(--royal-violet) 100%)',
                           color: '#FFFFFF',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           fontSize: '13px',
                           fontWeight: '700',
-                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.12)',
                           flexShrink: 0,
                         }}
                       >
@@ -129,8 +91,10 @@ const EmployeeTable = ({
                             color: 'var(--text-primary)',
                             cursor: 'pointer',
                             textDecoration: 'none',
+                            fontSize: '13.5px',
+                            transition: 'color var(--transition-fast)',
                           }}
-                          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--champagne-gold)')}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--royal-indigo)')}
                           onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
                         >
                           {emp.name}
@@ -149,7 +113,17 @@ const EmployeeTable = ({
 
                   {/* Department */}
                   <td style={{ padding: '14px 16px', color: 'var(--text-primary)', fontWeight: '600' }}>
-                    {emp.department}
+                    <span
+                      style={{
+                        padding: '3px 8px',
+                        borderRadius: '6px',
+                        backgroundColor: 'var(--bg-main)',
+                        border: '1px solid var(--border-subtle)',
+                        fontSize: '12px',
+                      }}
+                    >
+                      {emp.department}
+                    </span>
                   </td>
 
                   {/* Job Title */}
@@ -168,20 +142,17 @@ const EmployeeTable = ({
                   </td>
 
                   {/* Actions */}
-                  <td style={{ padding: '14px 20px', textAlign: 'right' }}>
+                  <td style={{ padding: '14px 22px', textAlign: 'right' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '8px' }}>
                       {/* View Profile */}
                       <button
+                        type="button"
                         onClick={() => onView(emp)}
+                        className="nexus-btn-secondary"
                         style={{
-                          padding: '5px 10px',
-                          borderRadius: '6px',
-                          border: '1px solid var(--border-light)',
-                          backgroundColor: '#FFFFFF',
-                          color: 'var(--royal-indigo)',
+                          padding: '5px 11px',
                           fontSize: '12px',
-                          fontWeight: '700',
-                          cursor: 'pointer',
+                          borderRadius: 'var(--radius-sm)',
                         }}
                       >
                         View
@@ -189,16 +160,13 @@ const EmployeeTable = ({
 
                       {/* Edit */}
                       <button
+                        type="button"
                         onClick={() => onEdit(emp)}
+                        className="nexus-btn-gold"
                         style={{
-                          padding: '5px 10px',
-                          borderRadius: '6px',
-                          border: '1px solid var(--champagne-gold)',
-                          backgroundColor: 'rgba(201, 162, 39, 0.08)',
-                          color: 'var(--navy-deep)',
+                          padding: '5px 11px',
                           fontSize: '12px',
-                          fontWeight: '700',
-                          cursor: 'pointer',
+                          borderRadius: 'var(--radius-sm)',
                         }}
                       >
                         Edit
@@ -206,16 +174,25 @@ const EmployeeTable = ({
 
                       {/* Toggle Status */}
                       <button
+                        type="button"
                         onClick={() => onToggleStatus(emp)}
                         style={{
-                          padding: '5px 10px',
-                          borderRadius: '6px',
-                          border: '1px solid var(--border-light)',
+                          padding: '5px 11px',
+                          borderRadius: 'var(--radius-sm)',
+                          border: '1px solid',
+                          borderColor: emp.status === 'Active' ? 'var(--status-danger-border)' : 'var(--status-success-border)',
                           backgroundColor: emp.status === 'Active' ? 'var(--status-danger-bg)' : 'var(--status-success-bg)',
                           color: emp.status === 'Active' ? 'var(--status-danger)' : 'var(--status-success)',
                           fontSize: '12px',
                           fontWeight: '700',
                           cursor: 'pointer',
+                          transition: 'all var(--transition-fast)',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.filter = 'brightness(0.95)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.filter = 'none';
                         }}
                       >
                         {emp.status === 'Active' ? 'Deactivate' : 'Activate'}
@@ -232,8 +209,8 @@ const EmployeeTable = ({
       {/* Table Footer / Summary */}
       <div
         style={{
-          padding: '12px 20px',
-          backgroundColor: 'var(--bg-main)',
+          padding: '14px 22px',
+          backgroundColor: 'var(--bg-surface-subtle)',
           borderTop: '1px solid var(--border-light)',
           display: 'flex',
           alignItems: 'center',
@@ -245,8 +222,8 @@ const EmployeeTable = ({
         <span>
           Showing <strong>{employees.length}</strong> employee record{employees.length !== 1 ? 's' : ''}
         </span>
-        <span style={{ fontWeight: '600', color: 'var(--champagne-gold)' }}>
-          Royal Executive Workforce Console
+        <span style={{ fontWeight: '600', color: 'var(--royal-indigo)', letterSpacing: '0.02em' }}>
+          Dayflow Royal Nexus Directory
         </span>
       </div>
     </div>

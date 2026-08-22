@@ -1,14 +1,14 @@
-// Admin Authentication Service
+// Dayflow Authentication Service (Admin & Employee)
 
 const AUTH_STORAGE_KEY = 'dayflow_admin_auth';
 
-export const login = async ({ email, password }) => {
+export const login = async ({ email, password, role = 'Admin' }) => {
   // Simulate network delay
   await new Promise((res) => setTimeout(res, 250));
 
   const trimmedEmail = email?.trim().toLowerCase();
   
-  // Accept standard demo admin credentials or any valid admin user
+  // 1. Admin login credentials
   if (
     (trimmedEmail === 'admin@dayflow.com' && password === 'admin123') ||
     (trimmedEmail && password && trimmedEmail.includes('admin'))
@@ -25,21 +25,39 @@ export const login = async ({ email, password }) => {
     return user;
   }
 
-  // If email format is valid, allow login for development/demo ease
-  if (trimmedEmail && password && password.length >= 4) {
+  // 2. Employee login credentials
+  if (
+    (trimmedEmail === 'employee@dayflow.com' && password === 'emp123') ||
+    (trimmedEmail && password && (trimmedEmail.includes('emp') || role === 'Employee'))
+  ) {
     const user = {
-      id: 'ADM-001',
-      name: trimmedEmail.split('@')[0].toUpperCase(),
-      email: trimmedEmail,
-      role: 'Admin',
-      department: 'Human Resources',
-      token: 'jwt-mock-admin-token-' + Date.now(),
+      id: 'EMP-001',
+      name: 'Sarah Jenkins',
+      email: trimmedEmail || 'employee@dayflow.com',
+      role: 'Employee',
+      department: 'Engineering',
+      token: 'jwt-mock-emp-token-' + Date.now(),
     };
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
     return user;
   }
 
-  throw new Error('Invalid email or password. Use admin@dayflow.com / admin123');
+  // 3. Fallback for custom user/demo credentials
+  if (trimmedEmail && password && password.length >= 3) {
+    const isEmp = role === 'Employee' || trimmedEmail.includes('emp');
+    const user = {
+      id: isEmp ? 'EMP-002' : 'ADM-001',
+      name: trimmedEmail.split('@')[0].toUpperCase(),
+      email: trimmedEmail,
+      role: isEmp ? 'Employee' : 'Admin',
+      department: isEmp ? 'Engineering' : 'Human Resources',
+      token: 'jwt-mock-token-' + Date.now(),
+    };
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+    return user;
+  }
+
+  throw new Error('Invalid email or password. Use demo credentials to sign in.');
 };
 
 export const logout = async () => {

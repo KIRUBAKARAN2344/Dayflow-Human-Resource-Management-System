@@ -2,49 +2,50 @@ import React from 'react';
 import { EmployeesIcon } from './Icons';
 
 const EmptyState = ({
-  title = 'No employees found',
+  title = 'No records found',
   description = 'No workforce records match your current search query or active filter criteria.',
   icon: Icon = EmployeesIcon,
   actionButton,
 }) => {
   return (
     <div
+      className="nexus-card"
       style={{
-        padding: '48px 24px',
+        padding: '54px 28px',
         textAlign: 'center',
-        backgroundColor: '#FFFFFF',
-        borderRadius: '14px',
-        border: '1px solid var(--border-light)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#FFFFFF',
       }}
     >
       <div
         style={{
-          width: '54px',
-          height: '54px',
-          borderRadius: '14px',
-          backgroundColor: 'rgba(23, 29, 56, 0.06)',
+          width: '60px',
+          height: '60px',
+          borderRadius: '16px',
+          background: 'linear-gradient(135deg, rgba(91, 95, 239, 0.08) 0%, rgba(124, 92, 252, 0.05) 100%)',
+          border: '1px solid rgba(91, 95, 239, 0.15)',
           color: 'var(--royal-indigo)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: '16px',
+          marginBottom: '18px',
+          boxShadow: '0 4px 12px rgba(91, 95, 239, 0.08)',
         }}
       >
         <Icon size={28} />
       </div>
 
-      <h3 style={{ fontSize: '17px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+      <h3 style={{ fontSize: '17px', fontWeight: '800', color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
         {title}
       </h3>
-      <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', marginTop: '6px', maxWidth: '420px', lineHeight: '1.4' }}>
+      <p style={{ fontSize: '13.5px', color: 'var(--text-secondary)', marginTop: '8px', maxWidth: '440px', lineHeight: '1.5' }}>
         {description}
       </p>
 
-      {actionButton && <div style={{ marginTop: '20px' }}>{actionButton}</div>}
+      {actionButton && <div style={{ marginTop: '22px' }}>{actionButton}</div>}
     </div>
   );
 };

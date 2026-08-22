@@ -100,18 +100,22 @@ const Navbar = ({
 
   return (
     <header
+      className="nexus-card-glass"
       style={{
         height: 'var(--navbar-height)',
-        backgroundColor: '#FFFFFF',
-        borderBottom: '1px solid var(--border-light)',
-        padding: '0 24px',
+        borderRadius: 0,
+        borderTop: 'none',
+        borderLeft: 'none',
+        borderRight: 'none',
+        borderBottom: '1px solid rgba(226, 232, 240, 0.8)',
+        padding: '0 28px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         position: 'sticky',
         top: 0,
         zIndex: 80,
-        boxShadow: 'var(--shadow-sm)',
+        boxShadow: 'var(--shadow-xs)',
       }}
     >
       {/* Left: Sidebar Toggle & Breadcrumbs */}
@@ -120,7 +124,7 @@ const Navbar = ({
           onClick={onToggleSidebar}
           aria-label="Toggle Sidebar"
           style={{
-            background: 'var(--bg-main)',
+            background: 'rgba(241, 245, 249, 0.8)',
             border: '1px solid var(--border-light)',
             color: 'var(--text-primary)',
             padding: '8px 10px',
@@ -129,21 +133,38 @@ const Navbar = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'background-color var(--transition-fast)',
+            transition: 'all var(--transition-fast)',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#E2E8F0')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-main)')}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#FFFFFF';
+            e.currentTarget.style.borderColor = 'rgba(91, 95, 239, 0.3)';
+            e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(241, 245, 249, 0.8)';
+            e.currentTarget.style.borderColor = 'var(--border-light)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
         >
           <MenuToggleIcon size={19} />
         </button>
 
         {/* Breadcrumb Navigation */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13.5px' }}>
           <span style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>
             {breadcrumb.section}
           </span>
           <span style={{ color: 'var(--text-muted)' }}>/</span>
-          <span style={{ color: 'var(--text-primary)', fontWeight: '700' }}>
+          <span
+            style={{
+              color: 'var(--text-primary)',
+              fontWeight: '700',
+              padding: '2px 8px',
+              backgroundColor: 'rgba(91, 95, 239, 0.06)',
+              borderRadius: '6px',
+              border: '1px solid rgba(91, 95, 239, 0.12)',
+            }}
+          >
             {breadcrumb.page}
           </span>
         </div>
@@ -175,25 +196,26 @@ const Navbar = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{
-              padding: '8px 12px 8px 36px',
-              borderRadius: '8px',
+              padding: '8px 36px 8px 36px',
+              borderRadius: '10px',
               border: '1px solid var(--border-light)',
-              backgroundColor: 'var(--bg-main)',
+              backgroundColor: '#FFFFFF',
               fontSize: '13px',
               color: 'var(--text-primary)',
               width: '240px',
               outline: 'none',
               transition: 'all var(--transition-fast)',
+              boxShadow: 'var(--shadow-xs)',
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = 'var(--champagne-gold)';
-              e.target.style.boxShadow = '0 0 0 3px var(--champagne-gold-light)';
-              e.target.style.backgroundColor = '#FFFFFF';
+              e.target.style.borderColor = 'var(--royal-indigo)';
+              e.target.style.boxShadow = '0 0 0 3px var(--royal-indigo-light)';
+              e.target.style.width = '270px';
             }}
             onBlur={(e) => {
               e.target.style.borderColor = 'var(--border-light)';
-              e.target.style.boxShadow = 'none';
-              e.target.style.backgroundColor = 'var(--bg-main)';
+              e.target.style.boxShadow = 'var(--shadow-xs)';
+              e.target.style.width = '240px';
             }}
           />
         </div>

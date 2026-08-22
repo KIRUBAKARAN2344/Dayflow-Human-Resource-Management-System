@@ -23,17 +23,9 @@ const LeaveTable = ({
         actionButton={
           onResetFilters && (
             <button
+              type="button"
               onClick={onResetFilters}
-              style={{
-                backgroundColor: 'var(--navy-deep)',
-                color: 'var(--champagne-gold)',
-                border: '1px solid var(--champagne-gold)',
-                padding: '8px 16px',
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: '700',
-                cursor: 'pointer',
-              }}
+              className="nexus-btn-primary"
             >
               Reset Filters
             </button>
@@ -54,38 +46,31 @@ const LeaveTable = ({
   };
 
   return (
-    <div style={{ backgroundColor: '#FFFFFF', borderRadius: '14px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflow: 'hidden' }}>
+    <div className="nexus-table-wrapper">
       <div style={{ overflowX: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '13.5px' }}>
+        <table className="nexus-table">
           <thead>
-            <tr
-              style={{
-                backgroundColor: 'var(--navy-deep)',
-                color: '#FFFFFF',
-                fontSize: '11.5px',
-                fontWeight: '700',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-              }}
-            >
-              <th style={{ padding: '14px 20px' }}>Employee</th>
-              <th style={{ padding: '14px 16px' }}>ID</th>
-              <th style={{ padding: '14px 16px' }}>Dept.</th>
+            <tr>
+              <th style={{ padding: '14px 22px' }}>Employee</th>
+              <th style={{ padding: '14px 16px' }}>Employee ID</th>
+              <th style={{ padding: '14px 16px' }}>Department</th>
               <th style={{ padding: '14px 16px' }}>Leave Type</th>
               <th style={{ padding: '14px 16px' }}>From</th>
               <th style={{ padding: '14px 16px' }}>To</th>
               <th style={{ padding: '14px 12px', textAlign: 'center' }}>Days</th>
               <th style={{ padding: '14px 16px' }}>Applied On</th>
               <th style={{ padding: '14px 16px' }}>Status</th>
-              <th style={{ padding: '14px 20px', textAlign: 'right' }}>Actions</th>
+              <th style={{ padding: '14px 22px', textAlign: 'right' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {records.map((rec, idx) => {
               const initials = rec.employeeName
-                .split(' ')
-                .map((n) => n[0])
-                .join('');
+                ? rec.employeeName
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')
+                : 'E';
               const isPending = rec.status === 'Pending';
               const typeColor = LEAVE_TYPE_COLORS[rec.leaveType] || '#6B7280';
 
@@ -93,22 +78,20 @@ const LeaveTable = ({
                 <tr
                   key={rec.id}
                   style={{
-                    borderBottom: idx === records.length - 1 ? 'none' : '1px solid var(--border-light)',
-                    backgroundColor: idx % 2 === 0 ? '#FFFFFF' : 'rgba(246, 247, 251, 0.5)',
-                    transition: 'background-color var(--transition-fast)',
+                    backgroundColor: idx % 2 === 0 ? '#FFFFFF' : 'rgba(248, 250, 252, 0.6)',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(201, 162, 39, 0.04)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = idx % 2 === 0 ? '#FFFFFF' : 'rgba(246, 247, 251, 0.5)')}
                 >
                   {/* Employee Name + Avatar */}
-                  <td style={{ padding: '13px 20px' }}>
+                  <td style={{ padding: '13px 22px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <div
                         style={{
                           width: '34px',
                           height: '34px',
-                          borderRadius: '50%',
-                          backgroundColor: rec.avatarColor || 'var(--royal-indigo)',
+                          borderRadius: '10px',
+                          background: rec.avatarColor
+                            ? `linear-gradient(135deg, ${rec.avatarColor} 0%, #171D38 100%)`
+                            : 'linear-gradient(135deg, var(--royal-indigo) 0%, var(--royal-violet) 100%)',
                           color: '#FFFFFF',
                           display: 'flex',
                           alignItems: 'center',
@@ -116,11 +99,12 @@ const LeaveTable = ({
                           fontSize: '12px',
                           fontWeight: '700',
                           flexShrink: 0,
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                         }}
                       >
                         {initials}
                       </div>
-                      <span style={{ fontWeight: '700', color: 'var(--text-primary)', fontSize: '13px' }}>
+                      <span style={{ fontWeight: '700', color: 'var(--text-primary)', fontSize: '13.5px' }}>
                         {rec.employeeName}
                       </span>
                     </div>
@@ -132,8 +116,10 @@ const LeaveTable = ({
                   </td>
 
                   {/* Department */}
-                  <td style={{ padding: '13px 16px', color: 'var(--text-secondary)', fontSize: '13px' }}>
-                    {rec.department}
+                  <td style={{ padding: '13px 16px', color: 'var(--text-primary)', fontWeight: '600' }}>
+                    <span style={{ padding: '2px 8px', borderRadius: '6px', backgroundColor: 'var(--bg-main)', border: '1px solid var(--border-subtle)', fontSize: '12px' }}>
+                      {rec.department}
+                    </span>
                   </td>
 
                   {/* Leave Type */}
@@ -143,7 +129,7 @@ const LeaveTable = ({
                         fontSize: '11.5px',
                         fontWeight: '700',
                         padding: '3px 8px',
-                        borderRadius: '8px',
+                        borderRadius: '6px',
                         backgroundColor: `${typeColor}15`,
                         color: typeColor,
                         border: `1px solid ${typeColor}30`,
@@ -160,7 +146,7 @@ const LeaveTable = ({
 
                   {/* Days */}
                   <td style={{ padding: '13px 12px', textAlign: 'center' }}>
-                    <span style={{ fontWeight: '700', fontSize: '14px', color: 'var(--text-primary)' }}>
+                    <span style={{ fontWeight: '800', fontSize: '13.5px', color: 'var(--text-primary)' }}>
                       {rec.days}
                     </span>
                   </td>
@@ -174,20 +160,16 @@ const LeaveTable = ({
                   </td>
 
                   {/* Actions */}
-                  <td style={{ padding: '13px 20px', textAlign: 'right' }}>
+                  <td style={{ padding: '13px 22px', textAlign: 'right' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '6px' }}>
                       <button
+                        type="button"
                         onClick={() => onView(rec)}
+                        className="nexus-btn-secondary"
                         style={{
-                          padding: '5px 10px',
-                          borderRadius: '6px',
-                          border: '1px solid var(--border-light)',
-                          backgroundColor: '#FFFFFF',
-                          color: 'var(--royal-indigo)',
-                          fontSize: '11.5px',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                          whiteSpace: 'nowrap',
+                          padding: '4px 10px',
+                          fontSize: '12px',
+                          borderRadius: 'var(--radius-sm)',
                         }}
                       >
                         View
@@ -196,33 +178,25 @@ const LeaveTable = ({
                       {isPending && (
                         <>
                           <button
+                            type="button"
                             onClick={() => onApprove(rec)}
+                            className="nexus-btn-success"
                             style={{
-                              padding: '5px 10px',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(22, 134, 106, 0.4)',
-                              backgroundColor: 'var(--status-success-bg)',
-                              color: 'var(--status-success)',
-                              fontSize: '11.5px',
-                              fontWeight: '700',
-                              cursor: 'pointer',
-                              whiteSpace: 'nowrap',
+                              padding: '4px 10px',
+                              fontSize: '12px',
+                              borderRadius: 'var(--radius-sm)',
                             }}
                           >
                             Approve
                           </button>
                           <button
+                            type="button"
                             onClick={() => onReject(rec)}
+                            className="nexus-btn-danger"
                             style={{
-                              padding: '5px 10px',
-                              borderRadius: '6px',
-                              border: '1px solid rgba(201, 76, 76, 0.4)',
-                              backgroundColor: 'var(--status-danger-bg)',
-                              color: 'var(--status-danger)',
-                              fontSize: '11.5px',
-                              fontWeight: '700',
-                              cursor: 'pointer',
-                              whiteSpace: 'nowrap',
+                              padding: '4px 10px',
+                              fontSize: '12px',
+                              borderRadius: 'var(--radius-sm)',
                             }}
                           >
                             Reject
@@ -238,75 +212,52 @@ const LeaveTable = ({
         </table>
       </div>
 
-      {/* Table Footer: Record count + Pagination */}
+      {/* Pagination Footer */}
       <div
         style={{
-          padding: '12px 20px',
-          backgroundColor: 'var(--bg-main)',
+          padding: '14px 22px',
+          backgroundColor: 'var(--bg-surface-subtle)',
           borderTop: '1px solid var(--border-light)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '12px',
+          fontSize: '12.5px',
+          color: 'var(--text-secondary)',
         }}
       >
-        <span style={{ fontSize: '12.5px', color: 'var(--text-secondary)' }}>
-          Showing <strong>{records.length}</strong> of <strong>{totalCount}</strong> request{totalCount !== 1 ? 's' : ''}
+        <span>
+          Showing <strong>{records.length}</strong> of <strong>{totalCount}</strong> leave requests
         </span>
 
-        {/* Pagination Controls */}
         {totalPages > 1 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <button
-              onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
+              type="button"
+              disabled={currentPage <= 1}
+              onClick={() => onPageChange(currentPage - 1)}
+              className="nexus-btn-secondary"
               style={{
-                padding: '5px 12px',
-                borderRadius: '6px',
-                border: '1px solid var(--border-light)',
-                backgroundColor: currentPage === 1 ? 'var(--bg-main)' : '#FFFFFF',
-                color: currentPage === 1 ? 'var(--text-muted)' : 'var(--text-primary)',
-                fontSize: '12.5px',
-                fontWeight: '600',
-                cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                padding: '4px 10px',
+                fontSize: '12px',
+                opacity: currentPage <= 1 ? 0.5 : 1,
               }}
             >
               Previous
             </button>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => onPageChange(page)}
-                style={{
-                  padding: '5px 10px',
-                  borderRadius: '6px',
-                  border: `1px solid ${currentPage === page ? 'var(--champagne-gold)' : 'var(--border-light)'}`,
-                  backgroundColor: currentPage === page ? 'var(--navy-deep)' : '#FFFFFF',
-                  color: currentPage === page ? 'var(--champagne-gold)' : 'var(--text-primary)',
-                  fontSize: '12.5px',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  minWidth: '32px',
-                }}
-              >
-                {page}
-              </button>
-            ))}
-
+            <span style={{ padding: '0 8px', fontWeight: '700', color: 'var(--text-primary)' }}>
+              {currentPage} / {totalPages}
+            </span>
             <button
-              onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-              disabled={currentPage === totalPages}
+              type="button"
+              disabled={currentPage >= totalPages}
+              onClick={() => onPageChange(currentPage + 1)}
+              className="nexus-btn-secondary"
               style={{
-                padding: '5px 12px',
-                borderRadius: '6px',
-                border: '1px solid var(--border-light)',
-                backgroundColor: currentPage === totalPages ? 'var(--bg-main)' : '#FFFFFF',
-                color: currentPage === totalPages ? 'var(--text-muted)' : 'var(--text-primary)',
-                fontSize: '12.5px',
-                fontWeight: '600',
-                cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                padding: '4px 10px',
+                fontSize: '12px',
+                opacity: currentPage >= totalPages ? 0.5 : 1,
               }}
             >
               Next

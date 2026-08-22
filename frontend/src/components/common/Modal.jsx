@@ -32,8 +32,9 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = '540px' }) => {
         style={{
           position: 'fixed',
           inset: 0,
-          backgroundColor: 'rgba(11, 16, 32, 0.65)',
-          backdropFilter: 'blur(4px)',
+          backgroundColor: 'rgba(8, 11, 24, 0.72)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
           transition: 'opacity var(--transition-normal)',
         }}
         aria-hidden="true"
@@ -47,8 +48,8 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = '540px' }) => {
           width: '100%',
           maxWidth,
           backgroundColor: '#FFFFFF',
-          borderRadius: '16px',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          borderRadius: 'var(--radius-xl)',
+          boxShadow: '0 25px 50px -12px rgba(8, 11, 24, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1)',
           border: '1px solid var(--border-light)',
           overflow: 'hidden',
           zIndex: 210,
@@ -60,8 +61,8 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = '540px' }) => {
         {/* Header */}
         <div
           style={{
-            padding: '18px 24px',
-            backgroundColor: 'var(--navy-deep)',
+            padding: '20px 26px',
+            background: 'linear-gradient(135deg, var(--midnight-navy) 0%, var(--navy-surface) 100%)',
             color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
@@ -69,37 +70,55 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = '540px' }) => {
             borderBottom: '1px solid var(--border-dark)',
           }}
         >
-          <h3 style={{ fontSize: '18px', fontWeight: '800', margin: 0, color: '#FFFFFF' }}>
-            {title}
-          </h3>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span
+              style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--champagne-gold)',
+                boxShadow: '0 0 8px var(--champagne-gold)',
+              }}
+            />
+            <h3 style={{ fontSize: '18px', fontWeight: '800', margin: 0, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
+              {title}
+            </h3>
+          </div>
           <button
             onClick={onClose}
             aria-label="Close modal"
             style={{
-              background: 'transparent',
-              border: 'none',
+              background: 'rgba(255, 255, 255, 0.08)',
+              border: '1px solid var(--border-dark)',
               color: 'var(--text-muted)',
               cursor: 'pointer',
-              padding: '4px',
-              borderRadius: '6px',
+              padding: '6px',
+              borderRadius: '8px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'color var(--transition-fast)',
+              transition: 'all var(--transition-fast)',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#FFFFFF')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#FFFFFF';
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.16)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'var(--text-muted)';
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+            }}
           >
-            <CloseIcon size={20} />
+            <CloseIcon size={18} />
           </button>
         </div>
 
         {/* Modal Body */}
         <div
           style={{
-            padding: '24px',
+            padding: '26px',
             overflowY: 'auto',
             flex: 1,
+            backgroundColor: '#FFFFFF',
           }}
         >
           {children}

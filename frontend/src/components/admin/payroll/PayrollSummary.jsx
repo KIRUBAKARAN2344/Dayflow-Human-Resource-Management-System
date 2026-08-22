@@ -18,7 +18,7 @@ const PayrollSummary = ({ stats }) => {
       subtitle: `${stats.processedCount} processed, ${stats.pendingCount} pending`,
       icon: EmployeesIcon,
       accent: 'var(--royal-indigo)',
-      badgeBg: 'rgba(23, 29, 56, 0.08)',
+      badgeBg: 'var(--royal-indigo-light)',
     },
     {
       title: 'GROSS PAYROLL',
@@ -26,7 +26,7 @@ const PayrollSummary = ({ stats }) => {
       subtitle: 'Total earnings before deductions',
       icon: TrendingUpIcon,
       accent: 'var(--status-info)',
-      badgeBg: 'rgba(37, 99, 235, 0.1)',
+      badgeBg: 'var(--status-info-bg)',
     },
     {
       title: 'TOTAL DEDUCTIONS',
@@ -42,7 +42,7 @@ const PayrollSummary = ({ stats }) => {
       subtitle: 'Total net payable amount',
       icon: PayrollIcon,
       accent: 'var(--champagne-gold)',
-      badgeBg: 'rgba(201, 162, 39, 0.12)',
+      badgeBg: 'var(--champagne-gold-light)',
     },
     {
       title: 'PAYROLL STATUS',
@@ -60,7 +60,7 @@ const PayrollSummary = ({ stats }) => {
           ? 'var(--status-success-bg)'
           : stats.overallStatus === 'Processing'
           ? 'var(--status-warning-bg)'
-          : 'rgba(105, 112, 134, 0.1)',
+          : 'rgba(148, 163, 184, 0.1)',
     },
   ];
 
@@ -80,12 +80,9 @@ const PayrollSummary = ({ stats }) => {
           return (
             <div
               key={idx}
+              className="nexus-card nexus-card-interactive"
               style={{
-                backgroundColor: '#FFFFFF',
-                borderRadius: '12px',
-                border: '1px solid var(--border-light)',
                 padding: '18px 20px',
-                boxShadow: 'var(--shadow-sm)',
                 position: 'relative',
                 overflow: 'hidden',
                 display: 'flex',
@@ -117,23 +114,17 @@ const PayrollSummary = ({ stats }) => {
                 </div>
                 <div
                   style={{
-                    fontSize: typeof card.count === 'string' && card.count.length > 8 ? '20px' : '24px',
+                    fontSize: '22px',
                     fontWeight: '800',
                     color: 'var(--text-primary)',
                     letterSpacing: '-0.02em',
                     marginTop: '2px',
-                    lineHeight: '1.2',
+                    lineHeight: '1.15',
                   }}
                 >
                   {card.count}
                 </div>
-                <div
-                  style={{
-                    fontSize: '11.5px',
-                    color: 'var(--text-secondary)',
-                    marginTop: '4px',
-                  }}
-                >
+                <div style={{ fontSize: '11.5px', color: 'var(--text-secondary)', marginTop: '4px', fontWeight: '500' }}>
                   {card.subtitle}
                 </div>
               </div>
@@ -148,7 +139,7 @@ const PayrollSummary = ({ stats }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexShrink: 0,
+                  boxShadow: `0 2px 8px ${card.badgeBg}`,
                 }}
               >
                 <Icon size={20} />
@@ -156,99 +147,6 @@ const PayrollSummary = ({ stats }) => {
             </div>
           );
         })}
-      </div>
-
-      {/* Salary Statistics & Department Breakdown 2-Column Grid */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '16px',
-        }}
-      >
-        {/* Salary Benchmarks Card */}
-        <div
-          style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '12px',
-            border: '1px solid var(--border-light)',
-            padding: '16px 20px',
-            boxShadow: 'var(--shadow-sm)',
-          }}
-        >
-          <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '12px' }}>
-            Salary Statistics Benchmarks
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', textAlign: 'center' }}>
-            <div style={{ padding: '10px', backgroundColor: 'var(--bg-main)', borderRadius: '8px' }}>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
-                Average Salary
-              </div>
-              <div style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)', marginTop: '4px' }}>
-                {formatCurrency(stats.avgSalary)}
-              </div>
-            </div>
-            <div style={{ padding: '10px', backgroundColor: 'var(--bg-main)', borderRadius: '8px' }}>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
-                Highest Salary
-              </div>
-              <div style={{ fontSize: '15px', fontWeight: '800', color: 'var(--status-success)', marginTop: '4px' }}>
-                {formatCurrency(stats.highestSalary)}
-              </div>
-            </div>
-            <div style={{ padding: '10px', backgroundColor: 'var(--bg-main)', borderRadius: '8px' }}>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
-                Lowest Salary
-              </div>
-              <div style={{ fontSize: '15px', fontWeight: '800', color: 'var(--status-info)', marginTop: '4px' }}>
-                {formatCurrency(stats.lowestSalary)}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Department Payroll Breakdown */}
-        <div
-          style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '12px',
-            border: '1px solid var(--border-light)',
-            padding: '16px 20px',
-            boxShadow: 'var(--shadow-sm)',
-          }}
-        >
-          <div style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '10px' }}>
-            Department Net Payroll Breakdown
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {stats.departmentBreakdown &&
-              stats.departmentBreakdown.map((dept) => {
-                const pct = stats.totalNet > 0 ? ((dept.totalNet / stats.totalNet) * 100).toFixed(1) : 0;
-                return (
-                  <div key={dept.department}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '3px' }}>
-                      <span style={{ fontWeight: '600', color: 'var(--text-primary)' }}>
-                        {dept.department} ({dept.employeeCount})
-                      </span>
-                      <span style={{ fontWeight: '700', color: 'var(--champagne-gold)' }}>
-                        {formatCurrency(dept.totalNet)} ({pct}%)
-                      </span>
-                    </div>
-                    <div style={{ height: '6px', backgroundColor: '#E2E8F0', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div
-                        style={{
-                          width: `${pct}%`,
-                          height: '100%',
-                          backgroundColor: 'var(--royal-indigo)',
-                          borderRadius: '3px',
-                        }}
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
       </div>
     </div>
   );

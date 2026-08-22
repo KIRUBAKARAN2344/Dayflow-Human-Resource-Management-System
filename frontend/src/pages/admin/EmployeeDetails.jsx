@@ -15,7 +15,6 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Extract ID from URL path if not explicitly passed as prop
   const currentId =
     employeeId ||
     window.location.pathname.split('/admin/employees/')[1] ||
@@ -64,14 +63,17 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
   if (error || !employee) return <ErrorMessage message={error || 'Employee profile not found.'} onRetry={fetchEmployeeData} />;
 
   const initials = employee.name
-    .split(' ')
-    .map((n) => n[0])
-    .join('');
+    ? employee.name
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+    : 'E';
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Back Button */}
       <button
+        type="button"
         onClick={handleBack}
         style={{
           display: 'inline-flex',
@@ -85,6 +87,7 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
           cursor: 'pointer',
           marginBottom: '16px',
           padding: '6px 0',
+          transition: 'color var(--transition-fast)',
         }}
       >
         <ChevronLeftIcon size={18} />
@@ -94,21 +97,17 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
       {/* Page Header */}
       <PageHeader
         title={employee.name}
-        description={`Employee Profile & Records (${employee.id})`}
-        breadcrumb={`People / Employees / ${employee.id}`}
+        description={`Executive Employee Profile & Lifecycle Records (${employee.id})`}
+        breadcrumb={`People / Directory / ${employee.id}`}
         actionButton={
           <button
+            type="button"
             onClick={() => setIsEditModalOpen(true)}
+            className="nexus-btn-gold"
             style={{
-              backgroundColor: 'var(--navy-deep)',
-              color: 'var(--champagne-gold)',
-              border: '1px solid var(--champagne-gold)',
-              padding: '10px 18px',
-              borderRadius: '8px',
+              padding: '10px 20px',
               fontSize: '13.5px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              boxShadow: 'var(--shadow-sm)',
+              borderRadius: 'var(--radius-md)',
             }}
           >
             Edit Profile
@@ -118,34 +117,34 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
 
       {/* Main Profile Header Card */}
       <div
+        className="nexus-card"
         style={{
-          backgroundColor: '#FFFFFF',
-          borderRadius: '16px',
-          border: '1px solid var(--border-light)',
-          padding: '28px',
-          boxShadow: 'var(--shadow-sm)',
+          padding: '28px 32px',
           marginBottom: '24px',
           display: 'flex',
           alignItems: 'center',
-          gap: '24px',
+          gap: '26px',
           flexWrap: 'wrap',
+          background: 'linear-gradient(135deg, #FFFFFF 0%, var(--bg-surface-subtle) 100%)',
         }}
       >
         {/* Large Avatar */}
         <div
           style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            backgroundColor: employee.avatarColor || 'var(--royal-indigo)',
+            width: '84px',
+            height: '84px',
+            borderRadius: '22px',
+            background: employee.avatarColor
+              ? `linear-gradient(135deg, ${employee.avatarColor} 0%, #171D38 100%)`
+              : 'linear-gradient(135deg, var(--royal-indigo) 0%, var(--royal-violet) 100%)',
             color: '#FFFFFF',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '28px',
+            fontSize: '30px',
             fontWeight: '800',
             border: '2px solid var(--champagne-gold)',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+            boxShadow: 'var(--shadow-md)',
             flexShrink: 0,
           }}
         >
@@ -155,17 +154,17 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
         {/* Profile Identity Info */}
         <div style={{ flex: 1, minWidth: '240px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+            <h2 style={{ fontSize: '26px', fontWeight: '800', color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.025em' }}>
               {employee.name}
             </h2>
             <EmployeeStatusBadge status={employee.status} />
           </div>
 
-          <div style={{ fontSize: '15px', fontWeight: '700', color: 'var(--champagne-gold)', marginTop: '4px' }}>
+          <div style={{ fontSize: '15px', fontWeight: '700', color: 'var(--royal-indigo)', marginTop: '4px' }}>
             {employee.jobTitle}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '8px', fontSize: '13px', color: 'var(--text-secondary)', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '10px', fontSize: '13px', color: 'var(--text-secondary)', flexWrap: 'wrap' }}>
             <span>
               ID: <strong style={{ color: 'var(--royal-indigo)', fontFamily: 'monospace' }}>{employee.id}</strong>
             </span>
@@ -191,12 +190,9 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
       >
         {/* Card 1: Personal Information */}
         <div
+          className="nexus-card"
           style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '14px',
-            border: '1px solid var(--border-light)',
             padding: '24px',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <div
@@ -206,30 +202,43 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
               gap: '10px',
               paddingBottom: '14px',
               marginBottom: '18px',
-              borderBottom: '1px solid var(--border-light)',
+              borderBottom: '1px solid var(--border-subtle)',
             }}
           >
-            <UserIcon size={20} style={{ color: 'var(--royal-indigo)' }} />
-            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+            <div
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '8px',
+                backgroundColor: 'var(--royal-indigo-light)',
+                color: 'var(--royal-indigo)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <UserIcon size={18} />
+            </div>
+            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.01em' }}>
               Personal Contact Details
             </h3>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Work Email
               </div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+              <div style={{ fontSize: '14.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
                 {employee.email}
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Phone Number
               </div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+              <div style={{ fontSize: '14.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
                 {employee.phone}
               </div>
             </div>
@@ -238,12 +247,9 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
 
         {/* Card 2: Employment Details */}
         <div
+          className="nexus-card"
           style={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '14px',
-            border: '1px solid var(--border-light)',
             padding: '24px',
-            boxShadow: 'var(--shadow-sm)',
           }}
         >
           <div
@@ -253,45 +259,58 @@ const EmployeeDetails = ({ employeeId, onNavigate }) => {
               gap: '10px',
               paddingBottom: '14px',
               marginBottom: '18px',
-              borderBottom: '1px solid var(--border-light)',
+              borderBottom: '1px solid var(--border-subtle)',
             }}
           >
-            <ShieldIcon size={20} style={{ color: 'var(--champagne-gold)' }} />
-            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+            <div
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '8px',
+                backgroundColor: 'var(--champagne-gold-light)',
+                color: 'var(--champagne-gold)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <ShieldIcon size={18} />
+            </div>
+            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.01em' }}>
               Employment Information
             </h3>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Department
               </div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
                 {employee.department}
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Job Title
               </div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
                 {employee.jobTitle}
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Joining Date
               </div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
                 {employee.joiningDate}
               </div>
             </div>
 
             <div>
-              <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 Status
               </div>
               <div style={{ marginTop: '4px' }}>

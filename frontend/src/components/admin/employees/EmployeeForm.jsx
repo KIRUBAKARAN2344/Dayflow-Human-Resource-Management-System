@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { isValidEmail, isValidPhone, isRequired } from '../../../utils/validators';
+import { generateLoginId } from '../../../utils/idGenerator';
 
 const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false }) => {
   const isEditMode = Boolean(initialValues && initialValues.id);
@@ -33,7 +34,18 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
   }, [initialValues]);
 
   const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const updated = { ...prev, [field]: value };
+      // Auto-generate Login ID when Name or Joining Date changes in Create Mode
+      if (!isEditMode && (field === 'name' || field === 'joiningDate')) {
+        if (updated.name && updated.name.trim().length >= 2) {
+          const year = updated.joiningDate ? new Date(updated.joiningDate).getFullYear() : 2026;
+          updated.id = generateLoginId('Odoo India', updated.name, year, 1);
+        }
+      }
+      return updated;
+    });
+
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: null }));
     }
@@ -110,39 +122,34 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
             placeholder="e.g. John Doe"
             value={formData.name}
             onChange={(e) => handleChange('name', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: `1px solid ${errors.name ? 'var(--status-danger)' : 'var(--border-light)'}`,
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: 'var(--bg-main)',
+              borderColor: errors.name ? 'var(--status-danger)' : undefined,
             }}
           />
           {errors.name && <span style={{ fontSize: '11.5px', color: 'var(--status-danger)', marginTop: '4px', display: 'block' }}>{errors.name}</span>}
         </div>
 
-        {/* Employee ID */}
+        {/* Employee Login ID (Auto-Generated) */}
         <div>
           <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '6px' }}>
-            Employee ID <span style={{ color: 'var(--status-danger)' }}>*</span>
+            Generated Login ID <span style={{ color: 'var(--status-danger)' }}>*</span>
           </label>
           <input
             type="text"
-            placeholder="e.g. EMP-009"
+            placeholder="e.g. OIJODO20220001"
             value={formData.id}
             disabled={isEditMode}
             onChange={(e) => handleChange('id', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: `1px solid ${errors.id ? 'var(--status-danger)' : 'var(--border-light)'}`,
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: isEditMode ? '#E2E8F0' : 'var(--bg-main)',
+              borderColor: errors.id ? 'var(--status-danger)' : undefined,
+              backgroundColor: isEditMode ? 'var(--bg-main)' : '#FFFFFF',
+              fontFamily: 'monospace',
+              fontWeight: '700',
+              color: 'var(--royal-indigo)',
               cursor: isEditMode ? 'not-allowed' : 'text',
+              opacity: isEditMode ? 0.75 : 1,
             }}
           />
           {errors.id && <span style={{ fontSize: '11.5px', color: 'var(--status-danger)', marginTop: '4px', display: 'block' }}>{errors.id}</span>}
@@ -158,14 +165,9 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
             placeholder="e.g. john.doe@dayflow.com"
             value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: `1px solid ${errors.email ? 'var(--status-danger)' : 'var(--border-light)'}`,
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: 'var(--bg-main)',
+              borderColor: errors.email ? 'var(--status-danger)' : undefined,
             }}
           />
           {errors.email && <span style={{ fontSize: '11.5px', color: 'var(--status-danger)', marginTop: '4px', display: 'block' }}>{errors.email}</span>}
@@ -181,14 +183,9 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
             placeholder="e.g. +1 (555) 019-2834"
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: `1px solid ${errors.phone ? 'var(--status-danger)' : 'var(--border-light)'}`,
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: 'var(--bg-main)',
+              borderColor: errors.phone ? 'var(--status-danger)' : undefined,
             }}
           />
           {errors.phone && <span style={{ fontSize: '11.5px', color: 'var(--status-danger)', marginTop: '4px', display: 'block' }}>{errors.phone}</span>}
@@ -202,15 +199,10 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
           <select
             value={formData.department}
             onChange={(e) => handleChange('department', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: `1px solid ${errors.department ? 'var(--status-danger)' : 'var(--border-light)'}`,
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: 'var(--bg-main)',
               cursor: 'pointer',
+              borderColor: errors.department ? 'var(--status-danger)' : undefined,
             }}
           >
             {departments.map((dept) => (
@@ -232,14 +224,9 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
             placeholder="e.g. Senior Software Engineer"
             value={formData.jobTitle}
             onChange={(e) => handleChange('jobTitle', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: `1px solid ${errors.jobTitle ? 'var(--status-danger)' : 'var(--border-light)'}`,
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: 'var(--bg-main)',
+              borderColor: errors.jobTitle ? 'var(--status-danger)' : undefined,
             }}
           />
           {errors.jobTitle && <span style={{ fontSize: '11.5px', color: 'var(--status-danger)', marginTop: '4px', display: 'block' }}>{errors.jobTitle}</span>}
@@ -254,14 +241,9 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
             type="date"
             value={formData.joiningDate}
             onChange={(e) => handleChange('joiningDate', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: `1px solid ${errors.joiningDate ? 'var(--status-danger)' : 'var(--border-light)'}`,
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: 'var(--bg-main)',
+              borderColor: errors.joiningDate ? 'var(--status-danger)' : undefined,
             }}
           />
           {errors.joiningDate && <span style={{ fontSize: '11.5px', color: 'var(--status-danger)', marginTop: '4px', display: 'block' }}>{errors.joiningDate}</span>}
@@ -275,14 +257,8 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
           <select
             value={formData.status}
             onChange={(e) => handleChange('status', e.target.value)}
+            className="nexus-input"
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              borderRadius: '8px',
-              border: '1px solid var(--border-light)',
-              fontSize: '13.5px',
-              outline: 'none',
-              backgroundColor: 'var(--bg-main)',
               cursor: 'pointer',
             }}
           >
@@ -293,21 +269,12 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
       </div>
 
       {/* Buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '12px', marginTop: '12px', paddingTop: '16px', borderTop: '1px solid var(--border-light)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '12px', marginTop: '12px', paddingTop: '16px', borderTop: '1px solid var(--border-subtle)' }}>
         <button
           type="button"
           onClick={onCancel}
           disabled={isSubmitting}
-          style={{
-            padding: '10px 18px',
-            borderRadius: '8px',
-            border: '1px solid var(--border-light)',
-            backgroundColor: 'var(--bg-main)',
-            color: 'var(--text-primary)',
-            fontSize: '13.5px',
-            fontWeight: '600',
-            cursor: isSubmitting ? 'not-allowed' : 'pointer',
-          }}
+          className="nexus-btn-secondary"
         >
           Cancel
         </button>
@@ -315,18 +282,7 @@ const EmployeeForm = ({ initialValues, onSubmit, onCancel, isSubmitting = false 
         <button
           type="submit"
           disabled={isSubmitting}
-          style={{
-            padding: '10px 22px',
-            borderRadius: '8px',
-            border: '1px solid var(--champagne-gold)',
-            backgroundColor: 'var(--navy-deep)',
-            color: 'var(--champagne-gold)',
-            fontSize: '13.5px',
-            fontWeight: '700',
-            cursor: isSubmitting ? 'not-allowed' : 'pointer',
-            boxShadow: 'var(--shadow-sm)',
-            opacity: isSubmitting ? 0.7 : 1,
-          }}
+          className="nexus-btn-primary"
         >
           {isSubmitting ? 'Saving...' : isEditMode ? 'Update Employee' : 'Save Employee'}
         </button>

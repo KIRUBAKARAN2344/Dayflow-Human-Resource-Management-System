@@ -26,30 +26,16 @@ const EmployeeSearch = ({ value, onChange }) => {
         placeholder="Search by employee name, ID, or email..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className="nexus-input"
         style={{
-          width: '100%',
-          padding: '10px 36px 10px 38px',
-          borderRadius: '10px',
-          border: '1px solid var(--border-light)',
-          backgroundColor: '#FFFFFF',
-          fontSize: '13.5px',
-          color: 'var(--text-primary)',
-          outline: 'none',
-          boxShadow: 'var(--shadow-sm)',
-          transition: 'all var(--transition-fast)',
-        }}
-        onFocus={(e) => {
-          e.target.style.borderColor = 'var(--champagne-gold)';
-          e.target.style.boxShadow = '0 0 0 3px var(--champagne-gold-light)';
-        }}
-        onBlur={(e) => {
-          e.target.style.borderColor = 'var(--border-light)';
-          e.target.style.boxShadow = 'var(--shadow-sm)';
+          paddingLeft: '38px',
+          paddingRight: value ? '34px' : '14px',
         }}
       />
 
       {value && (
         <button
+          type="button"
           onClick={() => onChange('')}
           title="Clear Search"
           style={{
@@ -63,7 +49,10 @@ const EmployeeSearch = ({ value, onChange }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            borderRadius: '4px',
           }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
         >
           <CloseIcon size={16} />
         </button>

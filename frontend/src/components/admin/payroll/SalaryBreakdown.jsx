@@ -21,10 +21,11 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
         {/* Payslip Header Card */}
         <div
           style={{
-            padding: '16px 20px',
-            backgroundColor: 'var(--navy-deep)',
+            padding: '18px 22px',
+            backgroundColor: 'var(--midnight-navy)',
             color: '#FFFFFF',
-            borderRadius: '10px',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--border-subtle)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -34,14 +35,14 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
         >
           <div>
             <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--champagne-gold)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              DAYFLOW HUMAN RESOURCE MANAGEMENT SYSTEM
+              DAYFLOW ROYAL NEXUS HRMS
             </div>
-            <div style={{ fontSize: '18px', fontWeight: '800', marginTop: '2px', color: '#FFFFFF' }}>
-              Employee Salary Payslip
+            <div style={{ fontSize: '18px', fontWeight: '800', marginTop: '2px', color: '#FFFFFF', letterSpacing: '-0.01em' }}>
+              Executive Compensation Payslip
             </div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--champagne-gold)' }}>
+            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--champagne-gold)' }}>
               Period: {record.month}
             </div>
             <div style={{ marginTop: '4px' }}>
@@ -58,39 +59,39 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
             gap: '12px',
             padding: '14px 18px',
             backgroundColor: 'var(--bg-main)',
-            borderRadius: '10px',
-            border: '1px solid var(--border-light)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--border-subtle)',
           }}
         >
           <div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Employee Name
             </div>
-            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
               {record.employeeName}
             </div>
           </div>
           <div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Employee ID
             </div>
-            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--royal-indigo)', fontFamily: 'monospace', marginTop: '2px' }}>
+            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--royal-indigo)', fontFamily: 'monospace', marginTop: '3px' }}>
               {record.employeeId}
             </div>
           </div>
           <div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Department
             </div>
-            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
               {record.department}
             </div>
           </div>
           <div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               Designation
             </div>
-            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '2px' }}>
+            <div style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)', marginTop: '3px' }}>
               {record.designation}
             </div>
           </div>
@@ -108,25 +109,26 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
           <div
             style={{
               backgroundColor: '#FFFFFF',
-              borderRadius: '10px',
+              borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-light)',
               overflow: 'hidden',
+              boxShadow: 'var(--shadow-xs)',
             }}
           >
             <div
               style={{
-                padding: '10px 16px',
-                backgroundColor: 'rgba(23, 29, 56, 0.05)',
+                padding: '12px 16px',
+                backgroundColor: 'var(--royal-indigo-light)',
                 fontWeight: '800',
-                fontSize: '12.5px',
+                fontSize: '12px',
                 color: 'var(--royal-indigo)',
-                borderBottom: '1px solid var(--border-light)',
+                borderBottom: '1px solid var(--border-subtle)',
                 letterSpacing: '0.04em',
               }}
             >
               EARNINGS & ALLOWANCES
             </div>
-            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
+            <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-secondary)' }}>Basic Salary</span>
                 <span style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{formatCurrency(record.basicSalary)}</span>
@@ -151,11 +153,12 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
                 style={{
                   marginTop: '8px',
                   paddingTop: '8px',
-                  borderTop: '1px dashed var(--border-light)',
+                  borderTop: '1px dashed var(--border-subtle)',
                   display: 'flex',
                   justifyContent: 'space-between',
                   fontWeight: '800',
-                  color: 'var(--status-info)',
+                  color: 'var(--royal-indigo)',
+                  fontSize: '13.5px',
                 }}
               >
                 <span>Gross Earnings</span>
@@ -168,25 +171,26 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
           <div
             style={{
               backgroundColor: '#FFFFFF',
-              borderRadius: '10px',
+              borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-light)',
               overflow: 'hidden',
+              boxShadow: 'var(--shadow-xs)',
             }}
           >
             <div
               style={{
-                padding: '10px 16px',
-                backgroundColor: 'rgba(201, 76, 76, 0.06)',
+                padding: '12px 16px',
+                backgroundColor: 'var(--status-danger-bg)',
                 fontWeight: '800',
-                fontSize: '12.5px',
+                fontSize: '12px',
                 color: 'var(--status-danger)',
-                borderBottom: '1px solid var(--border-light)',
+                borderBottom: '1px solid var(--border-subtle)',
                 letterSpacing: '0.04em',
               }}
             >
               DEDUCTIONS & TAXES
             </div>
-            <div style={{ padding: '12px 16px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
+            <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '13px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-secondary)' }}>Provident Fund (PF)</span>
                 <span style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{formatCurrency(record.pf)}</span>
@@ -211,11 +215,12 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
                 style={{
                   marginTop: '8px',
                   paddingTop: '8px',
-                  borderTop: '1px dashed var(--border-light)',
+                  borderTop: '1px dashed var(--border-subtle)',
                   display: 'flex',
                   justifyContent: 'space-between',
                   fontWeight: '800',
                   color: 'var(--status-danger)',
+                  fontSize: '13.5px',
                 }}
               >
                 <span>Total Deductions</span>
@@ -228,24 +233,24 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
         {/* Net Salary Summary Banner */}
         <div
           style={{
-            padding: '16px 20px',
-            backgroundColor: 'rgba(201, 162, 39, 0.08)',
-            border: '1px solid var(--champagne-gold)',
-            borderRadius: '10px',
+            padding: '18px 22px',
+            backgroundColor: 'var(--champagne-gold-light)',
+            border: '1px solid rgba(212, 175, 55, 0.4)',
+            borderRadius: 'var(--radius-md)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
         >
           <div>
-            <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--navy-deep)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--midnight-navy)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
               NET TAKE HOME SALARY
             </div>
             <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
               Gross Earnings ({formatCurrency(record.grossSalary)}) - Total Deductions ({formatCurrency(record.totalDeductions)})
             </div>
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--navy-deep)' }}>
+          <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--midnight-navy)' }}>
             {formatCurrency(record.netSalary)}
           </div>
         </div>
@@ -258,22 +263,13 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
             justifyContent: 'flex-end',
             gap: '12px',
             paddingTop: '4px',
-            borderTop: '1px solid var(--border-light)',
+            borderTop: '1px solid var(--border-subtle)',
           }}
         >
           <button
             type="button"
             onClick={onClose}
-            style={{
-              padding: '10px 18px',
-              borderRadius: '8px',
-              border: '1px solid var(--border-light)',
-              backgroundColor: 'var(--bg-main)',
-              color: 'var(--text-primary)',
-              fontSize: '13px',
-              fontWeight: '600',
-              cursor: 'pointer',
-            }}
+            className="nexus-btn-secondary"
           >
             Close
           </button>
@@ -281,15 +277,9 @@ const SalaryBreakdown = ({ isOpen, onClose, record }) => {
           <button
             type="button"
             onClick={handlePrint}
+            className="nexus-btn-gold"
             style={{
-              padding: '10px 20px',
-              borderRadius: '8px',
-              border: '1px solid var(--champagne-gold)',
-              backgroundColor: 'var(--navy-deep)',
-              color: 'var(--champagne-gold)',
-              fontSize: '13px',
-              fontWeight: '700',
-              cursor: 'pointer',
+              padding: '9px 20px',
               display: 'flex',
               alignItems: 'center',
               gap: '6px',

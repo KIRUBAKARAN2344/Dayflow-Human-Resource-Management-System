@@ -26,7 +26,7 @@ const AttendanceDetailsModal = ({ isOpen, onClose, record }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Attendance Record Details" maxWidth="500px">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
         {/* Status */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
           <AttendanceStatusBadge status={record.status} />
@@ -41,13 +41,13 @@ const AttendanceDetailsModal = ({ isOpen, onClose, record }) => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '10px 14px',
+                padding: '10px 16px',
                 backgroundColor: 'var(--bg-main)',
-                borderRadius: '8px',
-                border: '1px solid var(--border-light)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--border-subtle)',
               }}
             >
-              <span style={{ fontSize: '12.5px', fontWeight: '600', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 {label}
               </span>
               <span style={{ fontSize: '13.5px', fontWeight: '700', color: 'var(--text-primary)' }}>
@@ -60,41 +60,38 @@ const AttendanceDetailsModal = ({ isOpen, onClose, record }) => {
         {/* Remarks */}
         {record.remarks && (
           <div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>
+            <div style={{ fontSize: '11.5px', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>
               Attendance Remarks
             </div>
             <div
               style={{
-                padding: '10px 14px',
+                padding: '12px 16px',
                 backgroundColor: 'var(--bg-main)',
-                borderRadius: '8px',
-                border: '1px solid var(--border-light)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--border-subtle)',
                 fontSize: '13.5px',
                 color: 'var(--text-secondary)',
                 lineHeight: '1.5',
                 fontStyle: 'italic',
               }}
             >
-              {record.remarks}
+              "{record.remarks}"
             </div>
           </div>
         )}
 
-        <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '14px', display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '16px', display: 'flex', justifyContent: 'flex-end' }}>
           <button
+            type="button"
             onClick={onClose}
+            className="nexus-btn-primary"
             style={{
-              padding: '10px 20px',
-              borderRadius: '8px',
-              border: '1px solid var(--champagne-gold)',
-              backgroundColor: 'var(--navy-deep)',
-              color: 'var(--champagne-gold)',
+              padding: '9px 20px',
               fontSize: '13px',
-              fontWeight: '700',
-              cursor: 'pointer',
+              borderRadius: 'var(--radius-md)',
             }}
           >
-            Close
+            Close Details
           </button>
         </div>
       </div>
@@ -128,7 +125,7 @@ const Attendance = () => {
     setIsModalOpen(true);
   };
 
-  const today = new Date().toLocaleDateString('en-IN', {
+  const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -136,38 +133,32 @@ const Attendance = () => {
   });
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Page Header */}
       <PageHeader
-        title="Attendance Management"
-        description={`Monitor and manage employee attendance — ${today}`}
-        breadcrumb="HR Operations / Attendance"
+        title="Attendance Monitoring"
+        description={`Organization-wide attendance tracking, logs, and compliance analytics for ${today}.`}
+        breadcrumb="People / Attendance"
         actionButton={
           <button
+            type="button"
             onClick={refresh}
+            className="nexus-btn-secondary"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              backgroundColor: 'var(--navy-deep)',
-              color: 'var(--champagne-gold)',
-              border: '1px solid var(--champagne-gold)',
-              padding: '10px 18px',
-              borderRadius: '8px',
-              fontSize: '13.5px',
-              fontWeight: '700',
-              cursor: 'pointer',
+              padding: '9px 18px',
+              fontSize: '13px',
+              borderRadius: 'var(--radius-md)',
             }}
           >
-            ↻ Refresh
+            ↻ Refresh Data
           </button>
         }
       />
 
-      {/* KPI Summary Cards + Statistics Bar */}
+      {/* Summary KPI Cards & Progress */}
       <AttendanceSummary stats={stats} />
 
-      {/* Filters Toolbar */}
+      {/* Search and Filters Toolbar */}
       <AttendanceFilters
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -184,7 +175,7 @@ const Attendance = () => {
       {loading && <Loading message="Loading attendance records..." />}
       {error && <ErrorMessage message={error} onRetry={refresh} />}
 
-      {/* Attendance Table */}
+      {/* Attendance Records Table */}
       {!loading && (
         <AttendanceTable
           records={paginatedRecords}
@@ -197,10 +188,13 @@ const Attendance = () => {
         />
       )}
 
-      {/* Attendance Details Modal */}
+      {/* Record Details Modal */}
       <AttendanceDetailsModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedRecord(null);
+        }}
         record={selectedRecord}
       />
     </div>

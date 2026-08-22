@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ArrowRightIcon, LeaveIcon, CheckIcon, CloseIcon } from '../../common/Icons';
 
 const RecentLeaveRequests = ({ requests, onViewAll }) => {
-  // Demo mock data
   const defaultRequests = [
     {
       id: 101,
@@ -56,32 +55,29 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
         return {
           bg: 'var(--status-success-bg)',
           color: 'var(--status-success)',
-          border: 'rgba(22, 134, 106, 0.2)',
+          border: 'var(--status-success-border)',
         };
       case 'Rejected':
         return {
           bg: 'var(--status-danger-bg)',
           color: 'var(--status-danger)',
-          border: 'rgba(201, 76, 76, 0.2)',
+          border: 'var(--status-danger-border)',
         };
       case 'Pending':
       default:
         return {
           bg: 'var(--status-warning-bg)',
           color: 'var(--status-warning)',
-          border: 'rgba(200, 138, 26, 0.2)',
+          border: 'var(--status-warning-border)',
         };
     }
   };
 
   return (
     <div
+      className="nexus-card"
       style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: '14px',
-        border: '1px solid var(--border-light)',
-        padding: '22px',
-        boxShadow: 'var(--shadow-sm)',
+        padding: '22px 24px',
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
@@ -95,7 +91,7 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
           justifyContent: 'space-between',
           marginBottom: '18px',
           paddingBottom: '14px',
-          borderBottom: '1px solid var(--border-light)',
+          borderBottom: '1px solid var(--border-subtle)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -103,13 +99,14 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
             style={{
               padding: '6px',
               borderRadius: '8px',
-              backgroundColor: 'rgba(201, 162, 39, 0.1)',
+              backgroundColor: 'var(--champagne-gold-light)',
               color: 'var(--champagne-gold)',
+              border: '1px solid rgba(212, 175, 55, 0.3)',
             }}
           >
             <LeaveIcon size={18} />
           </div>
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0 }}>
+          <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', margin: 0, letterSpacing: '-0.02em' }}>
             Pending Leave Approvals
           </h3>
         </div>
@@ -122,12 +119,16 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
             gap: '6px',
             background: 'transparent',
             border: 'none',
-            color: 'var(--champagne-gold)',
+            color: 'var(--royal-indigo)',
             fontSize: '13px',
             fontWeight: '700',
             cursor: 'pointer',
-            padding: 0,
+            padding: '4px 8px',
+            borderRadius: '6px',
+            transition: 'background-color var(--transition-fast)',
           }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--royal-indigo-light)')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
         >
           <span>View All</span>
           <ArrowRightIcon size={14} />
@@ -135,7 +136,7 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
       </div>
 
       {/* Leave Cards List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
         {leaveList.map((item) => {
           const badge = getStatusBadge(item.status);
 
@@ -144,13 +145,26 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
               key={item.id}
               style={{
                 padding: '12px 14px',
-                borderRadius: '10px',
-                border: '1px solid #F1F5F9',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid var(--border-subtle)',
                 backgroundColor: 'var(--bg-main)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: '12px',
+                transition: 'all var(--transition-fast)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#FFFFFF';
+                e.currentTarget.style.borderColor = 'rgba(91, 95, 239, 0.2)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-xs)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--bg-main)';
+                e.currentTarget.style.borderColor = 'var(--border-subtle)';
+                e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
               <div>
@@ -162,19 +176,20 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
                     style={{
                       fontSize: '10.5px',
                       fontWeight: '700',
-                      padding: '2px 7px',
-                      borderRadius: '10px',
+                      padding: '2px 8px',
+                      borderRadius: 'var(--radius-pill)',
                       backgroundColor: badge.bg,
                       color: badge.color,
                       border: `1px solid ${badge.border}`,
                       textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
                     }}
                   >
                     {item.status}
                   </span>
                 </div>
                 <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-                  <strong style={{ color: 'var(--navy-deep)' }}>{item.type}</strong> • {item.duration}
+                  <strong style={{ color: 'var(--midnight-navy)' }}>{item.type}</strong> • {item.duration}
                 </div>
               </div>
 
@@ -184,22 +199,17 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
                   <button
                     onClick={() => handleAction(item.id, 'Approved')}
                     title="Approve Leave"
+                    className="nexus-btn-success"
                     style={{
-                      backgroundColor: 'var(--status-success)',
-                      color: '#FFFFFF',
-                      border: 'none',
                       padding: '6px 12px',
-                      borderRadius: '6px',
+                      borderRadius: 'var(--radius-sm)',
                       fontSize: '12px',
                       fontWeight: '700',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px',
-                      transition: 'opacity var(--transition-fast)',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.85')}
-                    onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
                   >
                     <CheckIcon size={14} />
                     <span>Approve</span>
@@ -211,9 +221,9 @@ const RecentLeaveRequests = ({ requests, onViewAll }) => {
                     style={{
                       backgroundColor: 'transparent',
                       color: 'var(--status-danger)',
-                      border: '1px solid var(--status-danger)',
+                      border: '1px solid var(--status-danger-border)',
                       padding: '5px 10px',
-                      borderRadius: '6px',
+                      borderRadius: 'var(--radius-sm)',
                       fontSize: '12px',
                       fontWeight: '700',
                       cursor: 'pointer',

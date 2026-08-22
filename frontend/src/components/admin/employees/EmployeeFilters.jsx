@@ -38,16 +38,12 @@ const EmployeeFilters = ({
         <select
           value={departmentFilter}
           onChange={(e) => onDepartmentChange(e.target.value)}
+          className="nexus-input"
           style={{
-            padding: '9px 12px',
-            borderRadius: '8px',
-            border: '1px solid var(--border-light)',
-            backgroundColor: '#FFFFFF',
+            padding: '8px 12px',
             fontSize: '13px',
-            color: 'var(--text-primary)',
-            outline: 'none',
             cursor: 'pointer',
-            boxShadow: 'var(--shadow-sm)',
+            width: 'auto',
           }}
         >
           {departments.map((dept) => (
@@ -66,16 +62,12 @@ const EmployeeFilters = ({
         <select
           value={statusFilter}
           onChange={(e) => onStatusChange(e.target.value)}
+          className="nexus-input"
           style={{
-            padding: '9px 12px',
-            borderRadius: '8px',
-            border: '1px solid var(--border-light)',
-            backgroundColor: '#FFFFFF',
+            padding: '8px 12px',
             fontSize: '13px',
-            color: 'var(--text-primary)',
-            outline: 'none',
             cursor: 'pointer',
-            boxShadow: 'var(--shadow-sm)',
+            width: 'auto',
           }}
         >
           {statuses.map((st) => (
@@ -89,25 +81,13 @@ const EmployeeFilters = ({
       {/* Reset Filters Button */}
       {hasActiveFilters && (
         <button
+          type="button"
           onClick={onReset}
+          className="nexus-btn-secondary"
           style={{
-            background: 'transparent',
-            border: '1px solid var(--border-light)',
-            color: 'var(--text-secondary)',
-            padding: '8px 12px',
-            borderRadius: '8px',
+            padding: '7px 14px',
             fontSize: '12.5px',
-            fontWeight: '600',
-            cursor: 'pointer',
-            transition: 'all var(--transition-fast)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'var(--bg-main)';
-            e.currentTarget.style.color = 'var(--text-primary)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.color = 'var(--text-secondary)';
+            borderRadius: 'var(--radius-sm)',
           }}
         >
           Clear Filters

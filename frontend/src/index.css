@@ -1,52 +1,101 @@
-/* Royal Executive HR Theme System */
+/* ==========================================================================
+   DAYFLOW — ROYAL NEXUS GLOBAL DESIGN SYSTEM & TOKENS
+   Linear / Stripe / Vercel-inspired Luxury Enterprise SaaS Design Language
+   ========================================================================== */
+
 :root {
-  /* Royal Palette */
-  --navy-deep: #0B1020;
+  /* ── Royal Nexus Palette ─────────────────────────────────────────────── */
+  --midnight-navy: #080B18;
+  --navy-deep: #0E1326;
   --navy-surface: #12182B;
-  --navy-card: #192038;
-  --royal-indigo: #171D38;
-  --royal-indigo-hover: #22294A;
-  --royal-indigo-active: #2A335C;
-  --champagne-gold: #C9A227;
-  --champagne-gold-hover: #D4AF37;
-  --champagne-gold-light: rgba(201, 162, 39, 0.12);
-  --champagne-gold-glow: rgba(201, 162, 39, 0.25);
+  --navy-card: #151C33;
+  --navy-hover: #1A223E;
   
-  /* Neutral Light Palette */
-  --bg-main: #F6F7FB;
+  /* Primary Brand Accents */
+  --royal-indigo: #5B5FEF;
+  --royal-indigo-hover: #4D51DB;
+  --royal-indigo-active: #3E42C2;
+  --royal-indigo-light: rgba(91, 95, 239, 0.12);
+  --royal-indigo-glow: rgba(91, 95, 239, 0.28);
+  
+  --royal-violet: #7C5CFC;
+  --royal-violet-light: rgba(124, 92, 252, 0.12);
+  --royal-violet-glow: rgba(124, 92, 252, 0.28);
+  
+  --electric-blue: #38BDF8;
+  --electric-blue-light: rgba(56, 189, 248, 0.12);
+  --electric-blue-glow: rgba(56, 189, 248, 0.25);
+  
+  --champagne-gold: #D4AF37;
+  --champagne-gold-hover: #E6C34E;
+  --champagne-gold-light: rgba(212, 175, 55, 0.12);
+  --champagne-gold-glow: rgba(212, 175, 55, 0.28);
+
+  /* ── Neutral Clean Palette ───────────────────────────────────────────── */
+  --bg-main: #F4F6FB;
   --bg-card: #FFFFFF;
-  --text-primary: #151827;
-  --text-secondary: #697086;
+  --bg-card-glass: rgba(255, 255, 255, 0.88);
+  --bg-card-hover: #FAFCFF;
+  --bg-surface-subtle: #F8FAFC;
+  
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
   --text-muted: #94A3B8;
+  --text-light: #F8FAFC;
+  
   --border-light: #E2E8F0;
+  --border-subtle: #EDF2F7;
+  --border-glass: rgba(255, 255, 255, 0.65);
   --border-dark: rgba(255, 255, 255, 0.08);
+  --border-dark-hover: rgba(255, 255, 255, 0.16);
 
-  /* Status Colors */
-  --status-success: #16866A;
-  --status-success-bg: rgba(22, 134, 106, 0.1);
-  --status-warning: #C88A1A;
-  --status-warning-bg: rgba(200, 138, 26, 0.1);
-  --status-danger: #C94C4C;
-  --status-danger-bg: rgba(201, 76, 76, 0.1);
-  --status-info: #2563EB;
-  --status-info-bg: rgba(37, 99, 235, 0.1);
+  /* ── Universal Status Colors ─────────────────────────────────────────── */
+  --status-success: #10B981;
+  --status-success-bg: rgba(16, 185, 129, 0.1);
+  --status-success-border: rgba(16, 185, 129, 0.25);
+  
+  --status-warning: #F59E0B;
+  --status-warning-bg: rgba(245, 158, 11, 0.1);
+  --status-warning-border: rgba(245, 158, 11, 0.25);
+  
+  --status-danger: #EF4444;
+  --status-danger-bg: rgba(239, 68, 68, 0.1);
+  --status-danger-border: rgba(239, 68, 68, 0.25);
+  
+  --status-info: #38BDF8;
+  --status-info-bg: rgba(56, 189, 248, 0.1);
+  --status-info-border: rgba(56, 189, 248, 0.25);
 
-  /* Shadow & Elevation */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(11, 16, 32, 0.06), 0 2px 4px -1px rgba(11, 16, 32, 0.03);
-  --shadow-lg: 0 10px 15px -3px rgba(11, 16, 32, 0.1), 0 4px 6px -2px rgba(11, 16, 32, 0.05);
-  --shadow-dropdown: 0 12px 24px -4px rgba(11, 16, 32, 0.15);
+  /* ── Multi-Layer Depth Shadows ───────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --shadow-dropdown: 0 14px 28px -4px rgba(15, 23, 42, 0.14), 0 4px 8px -2px rgba(15, 23, 42, 0.06);
+  
+  --shadow-glow-indigo: 0 0 24px -4px rgba(91, 95, 239, 0.35);
+  --shadow-glow-gold: 0 0 24px -4px rgba(212, 175, 55, 0.35);
+  --shadow-glow-blue: 0 0 24px -4px rgba(56, 189, 248, 0.35);
 
-  /* Layout Dimensions */
-  --sidebar-width: 270px;
+  /* ── Dimensions ──────────────────────────────────────────────────────── */
+  --sidebar-width: 272px;
   --sidebar-width-collapsed: 80px;
-  --navbar-height: 70px;
+  --navbar-height: 72px;
 
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 220ms ease-in-out;
+  /* ── Motion & Transitions ────────────────────────────────────────────── */
+  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
 }
 
+/* ── Reset & Typography ─────────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -54,16 +103,24 @@
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-main);
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-/* Custom Scrollbars */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+/* ── Custom Luxury Scrollbars ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -74,12 +131,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(105, 112, 134, 0.2);
+  background: rgba(148, 163, 184, 0.35);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(105, 112, 134, 0.4);
+  background: rgba(91, 95, 239, 0.5);
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb {
@@ -87,17 +144,277 @@ body {
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 162, 39, 0.4);
+  background: rgba(212, 175, 55, 0.45);
 }
 
-/* Typography Helpers */
-h1, h2, h3, h4, h5, h6 {
+/* ── Ambient Background Glow Layer ─────────────────────────────────────── */
+.nexus-ambient-bg {
+  position: relative;
+}
+
+.nexus-ambient-bg::before {
+  content: '';
+  position: fixed;
+  top: -120px;
+  right: -100px;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(91, 95, 239, 0.05) 0%, rgba(124, 92, 252, 0.02) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(50px);
+}
+
+.nexus-ambient-bg::after {
+  content: '';
+  position: fixed;
+  bottom: -150px;
+  left: 200px;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.04) 0%, rgba(212, 175, 55, 0.02) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(60px);
+}
+
+/* ── Reusable Glass & Card Utilities ───────────────────────────────────── */
+.nexus-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
+}
+
+.nexus-card-glass {
+  background: var(--bg-card-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-sm);
+}
+
+.nexus-card-interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(91, 95, 239, 0.25);
+}
+
+/* ── Button Tokens ─────────────────────────────────────────────────────── */
+.nexus-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.nexus-btn:hover {
+  transform: translateY(-1px);
+}
+
+.nexus-btn:active {
+  transform: translateY(0);
+}
+
+.nexus-btn-primary {
+  background: linear-gradient(135deg, var(--royal-indigo) 0%, var(--royal-violet) 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-sm), 0 2px 8px -2px rgba(91, 95, 239, 0.4);
+}
+
+.nexus-btn-primary:hover {
+  box-shadow: var(--shadow-md), var(--shadow-glow-indigo);
+  filter: brightness(1.06);
+}
+
+.nexus-btn-gold {
+  background: linear-gradient(135deg, #0E1326 0%, #151C33 100%);
+  color: var(--champagne-gold);
+  border: 1px solid var(--champagne-gold);
+  box-shadow: var(--shadow-sm);
+}
+
+.nexus-btn-gold:hover {
+  background: linear-gradient(135deg, #151C33 0%, #1A223E 100%);
+  box-shadow: var(--shadow-md), var(--shadow-glow-gold);
+  border-color: var(--champagne-gold-hover);
+  color: #FFFFFF;
+}
+
+.nexus-btn-secondary {
+  background: #FFFFFF;
   color: var(--text-primary);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-xs);
 }
 
-/* Keyframe Animations */
+.nexus-btn-secondary:hover {
+  background: var(--bg-main);
+  border-color: rgba(91, 95, 239, 0.3);
+  color: var(--royal-indigo);
+}
+
+.nexus-btn-danger {
+  background: var(--status-danger);
+  color: #FFFFFF;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.nexus-btn-danger:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.nexus-btn-success {
+  background: var(--status-success);
+  color: #FFFFFF;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.nexus-btn-success:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* ── Modern Form Control Styles ────────────────────────────────────────── */
+.nexus-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  background-color: #FFFFFF;
+  font-size: 13.5px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  font-family: inherit;
+}
+
+.nexus-input:focus {
+  border-color: var(--royal-indigo);
+  box-shadow: 0 0 0 3px var(--royal-indigo-light);
+}
+
+.nexus-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ── Modern Status Badges & Pills ──────────────────────────────────────── */
+.nexus-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.nexus-pill-success {
+  background-color: var(--status-success-bg);
+  color: var(--status-success);
+  border: 1px solid var(--status-success-border);
+}
+
+.nexus-pill-warning {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning);
+  border: 1px solid var(--status-warning-border);
+}
+
+.nexus-pill-danger {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger);
+  border: 1px solid var(--status-danger-border);
+}
+
+.nexus-pill-info {
+  background-color: var(--status-info-bg);
+  color: var(--status-info);
+  border: 1px solid var(--status-info-border);
+}
+
+.nexus-pill-gold {
+  background-color: var(--champagne-gold-light);
+  color: var(--champagne-gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.nexus-pill-neutral {
+  background-color: #F1F5F9;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+.nexus-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+/* ── High-End Table Styles ─────────────────────────────────────────────── */
+.nexus-table-wrapper {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.nexus-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.nexus-table th {
+  background-color: var(--navy-deep);
+  color: #FFFFFF;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.nexus-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.nexus-table tr:last-child td {
+  border-bottom: none;
+}
+
+.nexus-table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.nexus-table tbody tr:hover {
+  background-color: rgba(91, 95, 239, 0.025);
+}
+
+/* ── Animations & Transitions ──────────────────────────────────────────── */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -109,22 +426,59 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-@keyframes slideRight {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+@keyframes nexusFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes nexusPulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 .animate-fade-in {
   animation: fadeIn var(--transition-normal) forwards;
 }
 
-/* Responsive Utilities */
+.nexus-pulse-dot {
+  position: relative;
+}
+
+.nexus-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background-color: var(--status-success);
+  opacity: 0.4;
+  animation: nexusPulseGlow 2s ease-in-out infinite;
+}
+
+/* ── Responsive Utilities ───────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   :root {
     --sidebar-width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nexus-hide-mobile {
+    display: none !important;
+  }
+}
+
+/* ── Accessibility: Reduced Motion Support ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
