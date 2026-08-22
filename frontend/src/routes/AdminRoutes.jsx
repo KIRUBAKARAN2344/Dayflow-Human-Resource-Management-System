@@ -12,6 +12,12 @@ const AdminRoutes = ({ currentPath: initialPath }) => {
   const [path, setPath] = useState(initialPath || window.location.pathname);
 
   useEffect(() => {
+    if (initialPath) {
+      setPath(initialPath);
+    }
+  }, [initialPath]);
+
+  useEffect(() => {
     const handleLocationChange = () => {
       setPath(window.location.pathname);
     };

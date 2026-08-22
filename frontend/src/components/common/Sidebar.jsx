@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../../context/AuthContext';
 import {
   DashboardIcon,
   EmployeesIcon,
@@ -10,7 +11,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CloseIcon,
-  ShieldIcon
+  ShieldIcon,
 } from './Icons';
 
 const Sidebar = ({
@@ -19,8 +20,15 @@ const Sidebar = ({
   isCollapsed = false,
   onToggleCollapse,
   isMobileOpen = false,
-  onCloseMobile
+  onCloseMobile,
 }) => {
+  let auth = null;
+  try {
+    auth = useAuth();
+  } catch (e) {
+    // Graceful fallback if rendered outside AuthProvider
+  }
+
   const navGroups = [
     {
       title: 'OVERVIEW',
@@ -77,8 +85,27 @@ const Sidebar = ({
     }
   };
 
+  const handleLogout = async (e) => {
+    if (e) e.preventDefault();
+    if (auth && auth.logout) {
+      await auth.logout();
+    }
+    handleNavClick('/login');
+  };
+
   const isLinkActive = (path) => {
-    if (path === '/admin/dashboard' && currentPath === '/admin') return true;
+    if (path === '/admin/dashboard' && (currentPath === '/admin' || currentPath === '/admin/dashboard')) {
+      return true;
+    }
+    if (path === '/admin/employees' && currentPath.startsWith('/admin/employees')) {
+      return true;
+    }
+    if (
+      path === '/admin/leave-requests' &&
+      (currentPath === '/admin/leave' || currentPath === '/admin/leave-requests')
+    ) {
+      return true;
+    }
     return currentPath === path;
   };
 
@@ -112,9 +139,7 @@ const Sidebar = ({
           flexDirection: 'column',
           zIndex: 100,
           transition: 'width var(--transition-normal), transform var(--transition-normal)',
-          transform: isMobileOpen
-            ? 'translateX(0)'
-            : 'translateX(0)', // Controlled via CSS media query below on mobile
+          transform: isMobileOpen ? 'translateX(0)' : 'translateX(0)',
         }}
         className={`sidebar-container ${isMobileOpen ? 'mobile-open' : ''}`}
       >
@@ -140,7 +165,7 @@ const Sidebar = ({
               overflow: 'hidden',
             }}
           >
-            {/* CSS Crest / Brand Mark */}
+            {/* Crest Mark */}
             <div
               style={{
                 width: '38px',
@@ -168,7 +193,6 @@ const Sidebar = ({
                     fontWeight: '800',
                     letterSpacing: '0.08em',
                     lineHeight: '1.1',
-                    fontFamily: 'inherit',
                   }}
                 >
                   DAYFLOW
@@ -311,7 +335,7 @@ const Sidebar = ({
                         }
                       }}
                     >
-                      {/* Active Indicator Accent Bar */}
+                      {/* Active Accent Bar */}
                       {active && (
                         <div
                           style={{
@@ -371,7 +395,7 @@ const Sidebar = ({
           </div>
         )}
 
-        {/* Bottom Section: Settings, Logout & User Card */}
+        {/* Bottom Section: Logout & User Profile */}
         <div
           style={{
             padding: isCollapsed ? '12px 8px' : '16px 14px',
@@ -382,45 +406,9 @@ const Sidebar = ({
             gap: '8px',
           }}
         >
-          {/* Settings Item */}
-          <a
-            href="/admin/settings"
-            onClick={(e) => handleNavClick('/admin/settings', e)}
-            title={isCollapsed ? 'Settings' : undefined}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              padding: isCollapsed ? '10px 0' : '10px 12px',
-              justifyContent: isCollapsed ? 'center' : 'flex-start',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              color: isLinkActive('/admin/settings') ? '#FFFFFF' : 'var(--text-muted)',
-              backgroundColor: isLinkActive('/admin/settings') ? 'var(--royal-indigo)' : 'transparent',
-              fontSize: '13.5px',
-              fontWeight: '500',
-              transition: 'all var(--transition-fast)',
-            }}
-            onMouseEnter={(e) => {
-              if (!isLinkActive('/admin/settings')) {
-                e.currentTarget.style.backgroundColor = 'rgba(23, 29, 56, 0.6)';
-                e.currentTarget.style.color = '#FFFFFF';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (!isLinkActive('/admin/settings')) {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = 'var(--text-muted)';
-              }
-            }}
-          >
-            <SettingsIcon size={19} />
-            {!isCollapsed && <span>Settings</span>}
-          </a>
-
           {/* Logout Item */}
           <button
-            onClick={(e) => handleNavClick('/login', e)}
+            onClick={handleLogout}
             title={isCollapsed ? 'Logout' : undefined}
             style={{
               width: '100%',
@@ -434,7 +422,7 @@ const Sidebar = ({
               border: 'none',
               color: '#F87171',
               fontSize: '13.5px',
-              fontWeight: '500',
+              fontWeight: '600',
               cursor: 'pointer',
               transition: 'all var(--transition-fast)',
             }}
@@ -491,7 +479,7 @@ const Sidebar = ({
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  Administrator
+                  {auth?.user?.name || 'Administrator'}
                 </div>
                 <div
                   style={{
@@ -511,7 +499,7 @@ const Sidebar = ({
                       boxShadow: '0 0 6px var(--status-success)',
                     }}
                   />
-                  Online
+                  Online · Admin
                 </div>
               </div>
             </div>
