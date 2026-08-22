@@ -20,13 +20,8 @@ Built for the **Odoo × NMIT Bangalore Hackathon 2026**
 10. [Team Responsibilities](#team-responsibilities)
 11. [Setup & Installation](#setup--installation)
 12. [Environment Variables](#environment-variables)
-13. [Git Workflow](#git-workflow)
-14. [Development Status](#development-status)
-15. [Security Practices](#security-practices)
-16. [Future Enhancements](#future-enhancements)
-17. [Hackathon Information](#hackathon-information)
-18. [Documentation References](#documentation-references)
-19. [License](#license)
+13. [Documentation References](#documentation-references)
+14. [License](#license)
 
 ---
 
@@ -57,144 +52,25 @@ Dayflow aims to address this by consolidating these HR functions into a single, 
 
 ## Key Features
 
-| Feature Area | Description |
-|---|---|
-| Authentication | Login and role-based access control using JWT |
-| Employee Management | Create, view, update employee profiles and records |
-| Attendance | Check-in / check-out and attendance history tracking |
-| Leave Management | Leave application, leave history, and approval/rejection workflow |
-| Payroll | Salary information and payroll viewing, admin-managed |
-| Admin Dashboard | Organization-wide stats, employee, attendance, leave, and payroll management |
-| Employee Dashboard | Personal profile, attendance, leave, and payroll self-service views |
+### Admin/HR Features
+- **Dashboard**: High-level statistics on headcount, attendance rates, leave requests, and payroll summary.
+- **Employee Management**: Create, edit, and deactivate employee records with auto-generated system IDs.
+- **Attendance Monitoring**: View daily attendance records, monitor check-in/out timestamps, filter by status.
+- **Leave Management**: Review leave requests, approve or reject with comments, track employee leave balances.
+- **Payroll Management**: Generate monthly payroll, manage salary components (Basic, HRA, Allowances, Deductions), calculate Net Pay.
 
-## User Roles
-
-Dayflow supports two roles:
-
-1. **Admin / HR** — manages employees, monitors attendance, approves/rejects leave, and manages payroll.
-2. **Employee** — views their own profile, marks attendance, applies for leave, and views payroll.
+### Employee Features
+- **Employee Dashboard**: Quick view of attendance status, leave balance, recent notifications.
+- **Systray Check-in/out Widget**: Instant check-in/out with live status dot and time counter.
+- **Leave Self-Service**: Apply for leaves with automatic day count and view real-time approval status.
+- **Payroll & Salary Slips**: View monthly salary breakdown and payment status.
+- **Profile Management**: View personal details, employment details, and department information.
 
 ## Technology Stack
 
-**Frontend**
-- React
-- Vite
-- JavaScript / JSX
-- Axios
-- React Router
-
-**Backend**
-- Java
-- Spring Boot
-- Maven
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- Jakarta Validation
-- JWT
-
-**Database**
-- MySQL
-
-**Testing**
-- Postman
-- Spring Boot Test
-- H2 In-Memory Database (for integration testing)
-
-**Version Control**
-- Git
-- GitHub
-
-## System Architecture
-
-Dayflow follows a simple, single-backend, single-database architecture:
-
-```text
-React + Vite
-      ↓
-   Axios
-      ↓
-Spring Boot REST API
-      ↓
-Spring Data JPA
-      ↓
-   MySQL
-```
-
-The project uses **one Spring Boot backend application** and **one MySQL database**. All backend modules (auth, user, employee, payroll, attendance, leave) live within a single Spring Boot codebase for simplicity and maintainability during the hackathon.
-
-## Database Design
-
-The system is designed around five core entities:
-
-```text
-User
-Employee
-Attendance
-LeaveRequest
-Payroll
-```
-
-**High-level relationship:**
-
-```text
-User
-  ↓
-Employee
-  ├── Attendance
-  ├── LeaveRequest
-  └── Payroll
-```
-
-## Project Structure
-
-```text
-DAYFLOW/
-│
-├── backend/
-│   ├── pom.xml
-│   └── src/
-│       ├── main/
-│       │   ├── java/com/dayflow/
-│       │   │   ├── auth/
-│       │   │   ├── user/
-│       │   │   ├── employee/
-│       │   │   ├── payroll/
-│       │   │   ├── security/
-│       │   │   ├── exception/
-│       │   │   ├── config/
-│       │   │   ├── attendance/
-│       │   │   └── leave/
-│       │   └── resources/
-│       │       └── application.properties
-│       └── test/
-│
-├── frontend/
-│   ├── package.json
-│   └── src/
-│       ├── components/
-│       │   ├── common/
-│       │   ├── admin/
-│       │   └── employee/
-│       ├── pages/
-│       │   ├── auth/
-│       │   ├── admin/
-│       │   └── employee/
-│       ├── services/
-│       ├── hooks/
-│       ├── utils/
-│       └── assets/
-│
-├── database/
-│   └── README.md
-│
-├── docs/
-│   ├── API_CONTRACT.md
-│   └── TEAM_STRUCTURE.md
-│
-├── README.md
-└── .gitignore
-```
+- **Backend**: Java 17+, Spring Boot 3.2.5, Spring Security, Spring Data JPA, JJWT 0.13.0
+- **Frontend**: React 18, Vite, React Router v6, Lucide Icons, Vanilla CSS Design System
+- **Database**: MySQL 8.0+ (Production/Dev), In-Memory H2 Database (Automated Test Suite)
 
 ## Team Responsibilities
 
