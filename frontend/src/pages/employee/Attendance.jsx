@@ -25,7 +25,7 @@ const Attendance = () => {
       setHistory(records);
 
       const todayStr = new Date().toISOString().split('T')[0];
-      const todayRec = records.find((r) => r.date === todayStr) || records[records.length - 1];
+      const todayRec = records.find((r) => r.date === todayStr);
       setTodayAttendance(todayRec || null);
     } catch (err) {
       setMessage({ type: 'danger', text: err.message || 'Failed to load attendance records.' });
@@ -45,7 +45,12 @@ const Attendance = () => {
       const updated = await attendanceService.checkIn(currentUser?.id);
       setMessage({ type: 'success', text: 'Checked in successfully!' });
       setTodayAttendance(updated);
-      fetchAttendance();
+      
+      // Update history log state immediately
+      setHistory((prev) => {
+        const filtered = prev.filter((r) => r.date !== updated.date);
+        return [updated, ...filtered];
+      });
     } catch (err) {
       setMessage({ type: 'danger', text: err.message });
     } finally {
@@ -60,7 +65,12 @@ const Attendance = () => {
       const updated = await attendanceService.checkOut(currentUser?.id);
       setMessage({ type: 'success', text: 'Checked out successfully!' });
       setTodayAttendance(updated);
-      fetchAttendance();
+      
+      // Update history log state immediately
+      setHistory((prev) => {
+        const filtered = prev.filter((r) => r.date !== updated.date);
+        return [updated, ...filtered];
+      });
     } catch (err) {
       setMessage({ type: 'danger', text: err.message });
     } finally {
@@ -98,7 +108,7 @@ const Attendance = () => {
               fontWeight: tab === activeTab ? '700' : '500',
               color: tab === activeTab ? '#fff' : 'var(--text-muted)',
               background: tab === activeTab
-                ? 'linear-gradient(135deg, var(--primary-500), var(--primary-700))'
+                ? 'linear-gradient(135deg, var(--primary-600), var(--primary-700))'
                 : 'transparent',
               border: 'none',
               borderRight: '1px solid var(--border-subtle)',
@@ -163,7 +173,7 @@ const Attendance = () => {
               </thead>
               <tbody>
                 {history.map((record) => (
-                  <tr key={record.id || Math.random()}>
+                  <tr key={record.id || `${record.date}-${record.checkIn}`}>
                     <td style={{ fontWeight: '600' }}>{record.date}</td>
                     <td>{record.checkIn || '--:--'}</td>
                     <td>{record.checkOut || '--:--'}</td>

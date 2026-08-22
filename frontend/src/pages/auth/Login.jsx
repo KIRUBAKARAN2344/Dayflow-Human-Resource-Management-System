@@ -28,20 +28,20 @@ const Login = () => {
     <div
       style={{
         minHeight: '100vh',
-        backgroundColor: 'var(--bg-main)',
+        backgroundColor: '#f8fafc',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '20px',
-        backgroundImage: `radial-gradient(ellipse at 60% 30%, rgba(139,92,246,0.12) 0%, transparent 60%),
-                          radial-gradient(ellipse at 20% 80%, rgba(109,40,217,0.08) 0%, transparent 50%)`,
+        backgroundImage: `radial-gradient(ellipse at 60% 30%, rgba(124, 58, 237, 0.06) 0%, transparent 60%),
+                          radial-gradient(ellipse at 20% 80%, rgba(124, 58, 237, 0.04) 0%, transparent 50%)`,
       }}
     >
       <div
         style={{
           width: '100%',
           maxWidth: '420px',
-          background: 'var(--bg-card)',
+          background: '#ffffff',
           borderRadius: 'var(--radius-xl)',
           border: '1px solid var(--border-color)',
           padding: '40px 36px',
@@ -55,13 +55,13 @@ const Login = () => {
               width: '56px',
               height: '56px',
               borderRadius: '16px',
-              background: 'linear-gradient(135deg, var(--primary-500), var(--primary-700))',
+              background: 'linear-gradient(135deg, var(--primary-600), var(--primary-700))',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#fff',
               marginBottom: '16px',
-              boxShadow: '0 0 32px rgba(139,92,246,0.4)',
+              boxShadow: '0 4px 14px rgba(124, 58, 237, 0.3)',
             }}
           >
             <Layers size={30} />
