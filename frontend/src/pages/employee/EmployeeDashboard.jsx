@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Clock, Calendar, DollarSign, LogIn, LogOut,
-  ArrowRight, CheckCircle2, User
+  ArrowRight, User, CheckCircle2, ShieldCheck
 } from 'lucide-react';
 import { attendanceService } from '../../services/attendanceService';
 import { leaveService }      from '../../services/leaveService';
@@ -11,6 +11,8 @@ import { authService }       from '../../services/authService';
 import LeaveStatus           from '../../components/employee/LeaveStatus';
 import AttendanceCard        from '../../components/employee/AttendanceCard';
 
+const TABS = ['Company Logo', 'Dashboard', 'Attendance', 'Time Off'];
+
 const EmployeeDashboard = () => {
   const [attendance, setAttendance]       = useState(null);
   const [leaves, setLeaves]               = useState([]);
@@ -18,6 +20,7 @@ const EmployeeDashboard = () => {
   const [loading, setLoading]             = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [message, setMessage]             = useState({ type: '', text: '' });
+  const [activeTab, setActiveTab]         = useState('Dashboard');
   const navigate = useNavigate();
 
   const currentUser = authService.getCurrentUser();
@@ -38,13 +41,15 @@ const EmployeeDashboard = () => {
       setLeaves(Array.isArray(leaveData) ? leaveData : []);
       setPayroll(payData);
     } catch {
-      setMessage({ type: 'danger', text: 'Failed to load dashboard data.' });
+      setMessage({ type: 'danger', text: 'Failed to load personal dashboard data.' });
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleCheckIn = async () => {
     setActionLoading(true);
@@ -76,19 +81,66 @@ const EmployeeDashboard = () => {
 
   const pendingCount  = leaves.filter((l) => l.status === 'PENDING').length;
   const approvedCount = leaves.filter((l) => l.status === 'APPROVED').length;
+  const isCheckedIn   = !!attendance?.checkIn && !attendance?.checkOut;
 
   return (
     <div>
+      {/* Top Odoo Tab Bar */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0',
+          marginBottom: '24px',
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border-color)',
+          borderRadius: 'var(--radius-md)',
+          overflow: 'hidden',
+          width: 'fit-content',
+        }}
+      >
+        {TABS.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => {
+              setActiveTab(tab);
+              if (tab === 'Attendance') navigate('/employee/attendance');
+              if (tab === 'Time Off')   navigate('/employee/leave/apply');
+            }}
+            style={{
+              padding: '10px 20px',
+              fontSize: '13px',
+              fontWeight: tab === activeTab ? '700' : '500',
+              color: tab === activeTab ? '#fff' : 'var(--text-muted)',
+              background: tab === activeTab
+                ? 'linear-gradient(135deg, var(--primary-500), var(--primary-700))'
+                : 'transparent',
+              border: 'none',
+              borderRight: '1px solid var(--border-subtle)',
+              cursor: 'pointer',
+              transition: 'all 0.18s',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {tab === 'Company Logo' ? (
+              <span style={{ fontWeight: '800', letterSpacing: '-0.02em' }}>🌊 Dayflow</span>
+            ) : (
+              tab
+            )}
+          </button>
+        ))}
+      </div>
+
       {/* Header */}
       <div className="page-header">
         <div>
           <h1 className="page-title">
-            Welcome back, {currentUser?.firstName || 'Employee'} 👋
+            Welcome back, {currentUser?.firstName || 'Sarah'} {currentUser?.lastName || 'Jenkins'} 👋
           </h1>
-          <p className="page-subtitle">Here's your work overview for today</p>
+          <p className="page-subtitle">Your personal employee portal & daily activity overview</p>
         </div>
         <button className="btn btn-outline" onClick={() => navigate('/employee/profile')}>
-          <User size={16} /> View Profile
+          <User size={16} /> View My Profile
         </button>
       </div>
 
@@ -96,11 +148,11 @@ const EmployeeDashboard = () => {
         <div className={`alert alert-${message.type}`}>{message.text}</div>
       )}
 
-      {/* Stat Cards */}
+      {/* Personal Stat Overview Cards */}
       <div className="grid-3" style={{ marginBottom: '24px' }}>
         <div className="stat-card" onClick={() => navigate('/employee/attendance')}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="stat-card-label">Today's Status</span>
+            <span className="stat-card-label">My Today's Attendance</span>
             <Clock size={18} style={{ color: 'var(--primary-400)' }} />
           </div>
           <div className="stat-card-value">
@@ -115,24 +167,24 @@ const EmployeeDashboard = () => {
 
         <div className="stat-card" onClick={() => navigate('/employee/leave/history')}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="stat-card-label">Pending Leaves</span>
+            <span className="stat-card-label">My Leave Status</span>
             <Calendar size={18} style={{ color: 'var(--warning-text)' }} />
           </div>
-          <div className="stat-card-value">{pendingCount}</div>
+          <div className="stat-card-value">{pendingCount} Pending</div>
           <div className="stat-card-sub">
-            {approvedCount} approved · {leaves.length} total
+            {approvedCount} approved · {leaves.length} total submitted
           </div>
         </div>
 
         <div className="stat-card" onClick={() => navigate('/employee/payroll')}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span className="stat-card-label">Net Salary</span>
+            <span className="stat-card-label">My Net Salary</span>
             <DollarSign size={18} style={{ color: 'var(--success-text)' }} />
           </div>
           <div className="stat-card-value">
             {payroll?.netSalary
               ? `₹${payroll.netSalary.toLocaleString('en-IN')}`
-              : '₹35,000'}
+              : '₹50,000'}
           </div>
           <div className="stat-card-sub">
             {payroll?.paymentStatus || 'PAID'} · {payroll?.month || 'Current Month'}
@@ -140,7 +192,7 @@ const EmployeeDashboard = () => {
         </div>
       </div>
 
-      {/* Attendance Check-In/Out Card */}
+      {/* Daily Attendance Action Widget */}
       <div style={{ marginBottom: '24px' }}>
         <AttendanceCard
           attendance={attendance}
@@ -150,15 +202,15 @@ const EmployeeDashboard = () => {
         />
       </div>
 
-      {/* Recent Leave Requests */}
+      {/* Logged-In Employee Recent Leave Requests */}
       <div className="card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
           <div>
             <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-main)' }}>
-              Recent Leave Requests
+              My Recent Time Off Requests
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>
-              Your last submitted requests
+              Only showing your submitted leave records
             </p>
           </div>
           <button
@@ -166,7 +218,7 @@ const EmployeeDashboard = () => {
             style={{ fontSize: '13px', padding: '7px 14px' }}
             onClick={() => navigate('/employee/leave/history')}
           >
-            View All <ArrowRight size={14} />
+            View All My Leaves <ArrowRight size={14} />
           </button>
         </div>
 
@@ -177,16 +229,23 @@ const EmployeeDashboard = () => {
         ) : leaves.length === 0 ? (
           <div className="empty-state">
             <Calendar size={32} style={{ margin: '0 auto 12px', opacity: 0.3 }} />
-            <p>No leave requests yet. Click "Apply Leave" to submit.</p>
+            <p>No leave requests submitted yet. Click below to apply.</p>
+            <button
+              className="btn btn-primary"
+              style={{ marginTop: '12px' }}
+              onClick={() => navigate('/employee/leave/apply')}
+            >
+              Apply Leave
+            </button>
           </div>
         ) : (
           <div className="table-container">
             <table className="custom-table">
               <thead>
                 <tr>
-                  <th>Type</th>
-                  <th>Start</th>
-                  <th>End</th>
+                  <th>Leave Type</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
                   <th>Reason</th>
                   <th>Status</th>
                 </tr>
