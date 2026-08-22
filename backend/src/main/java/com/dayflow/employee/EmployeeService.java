@@ -1,0 +1,25 @@
+package com.dayflow.employee;
+
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+@Service
+public class EmployeeService {
+    private final EmployeeRepository employeeRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    public Employee save(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    public Optional<Employee> findById(Long id) {
+        return employeeRepository.findById(id);
+    }
+
+    public Optional<Employee> findByUserId(Long userId) {
+        return employeeRepository.findByUserId(userId);
+    }
+}
