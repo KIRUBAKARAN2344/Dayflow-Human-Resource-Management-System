@@ -1,6 +1,7 @@
 package com.dayflow.employee;
 
 import org.springframework.stereotype.Service;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,9 @@ public class EmployeeService {
 
     public Optional<Employee> findByUserId(Long userId) {
         return employeeRepository.findByUserId(userId);
+    }
+
+    public List<Employee> findAll() {
+        return employeeRepository.findAll();
     }
 }
