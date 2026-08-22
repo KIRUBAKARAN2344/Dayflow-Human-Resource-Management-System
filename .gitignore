@@ -1,9 +1,18 @@
 # ==============================
-# Java / Maven
+# Java / Compiled Files
 # ==============================
+*.class
 target/
 **/target/
-*.class
+
+# ==============================
+# Logs
+# ==============================
+*.log
+
+# ==============================
+# Package Files
+# ==============================
 *.jar
 *.war
 *.nar
@@ -11,8 +20,16 @@ target/
 *.zip
 *.tar.gz
 *.rar
+
+# ==============================
+# JVM Crash Logs
+# ==============================
 hs_err_pid*
 replay_pid*
+
+# ==============================
+# Maven
+# ==============================
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -24,16 +41,32 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 # ==============================
-# Node / React / Vite
+# Node.js / React / Vite
 # ==============================
 node_modules/
 dist/
 dist-ssr/
 build/
 *.local
+.npm/
+.eslintcache
 
 # ==============================
-# IDEs & Editors
+# Environment Variables / Secrets
+# ==============================
+.env
+.env.*
+!.env.example
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# ==============================
+# IDE / Editor
 # ==============================
 .idea/
 *.iml
@@ -44,28 +77,23 @@ build/
 *.sublime-workspace
 
 # ==============================
-# Environment / Secrets
-# ==============================
-.env
-.env.*
-!.env.example
-.env.local
-.env.production
-.env.development
-
-# ==============================
-# Logs
-# ==============================
-*.log
-
-# ==============================
 # OS Generated Files
 # ==============================
 .DS_Store
 Thumbs.db
+Desktop.ini
 
 # ==============================
 # Temporary Files
 # ==============================
 *.tmp
 *.temp
+*.swp
+*.swo
+*~
+
+# ==============================
+# Coverage
+# ==============================
+coverage/
+.nyc_output/
