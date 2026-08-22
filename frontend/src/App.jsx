@@ -1,9 +1,8 @@
+import React from 'react';
+import AppRoutes from './routes/AppRoutes';
+
 function App() {
-  return (
-    <div>
-      <h1>Dayflow HRMS - Admin Module</h1>
-    </div>
-  );
+  return <AppRoutes />;
 }
 
 export default App;
