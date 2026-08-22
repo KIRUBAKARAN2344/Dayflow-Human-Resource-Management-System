@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import LoginForm from '../../components/auth/LoginForm';
 import SignUpForm from '../../components/auth/SignUpForm';
 import { ShieldIcon, UserIcon } from '../../components/common/Icons';
@@ -6,10 +7,19 @@ import { ShieldIcon, UserIcon } from '../../components/common/Icons';
 const Login = ({ onNavigate }) => {
   const [authMode, setAuthMode] = useState('signin'); // 'signin' | 'signup'
   const [activeRole, setActiveRole] = useState('Admin'); // 'Admin' | 'Employee'
+  
+  let navigate = null;
+  try {
+    navigate = useNavigate();
+  } catch (e) {
+    // Graceful fallback if outside router context
+  }
 
   const handleSuccess = (role) => {
-    const targetPath = role === 'Employee' ? '/admin/dashboard' : '/admin/dashboard';
-    if (onNavigate) {
+    const targetPath = role === 'Employee' ? '/employee/dashboard' : '/admin/dashboard';
+    if (navigate) {
+      navigate(targetPath);
+    } else if (onNavigate) {
       onNavigate(targetPath);
     } else {
       window.history.pushState({}, '', targetPath);
@@ -89,7 +99,7 @@ const Login = ({ onNavigate }) => {
           ) : (
             <UserIcon size={18} style={{ color: '#38BDF8' }} />
           )}
-          <span>App/Web Logo</span>
+          <span>Dayflow HRMS</span>
         </div>
 
         {/* Role Switcher Pill Bar (Only on Sign In view) */}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from '../common/Sidebar';
-import Navbar from '../common/Navbar';
+import Sidebar from './AdminSidebar';
+import Navbar from './AdminNavbar';
 
 const AdminLayout = ({ children, currentPath = '/admin/dashboard', onNavigate }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
