@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogIn, LogOut, User, Bell, Search, Clock, ChevronDown } from 'lucide-react';
+import { LogIn, LogOut, User, Bell, Search, Clock, ChevronDown, Menu } from 'lucide-react';
 import { authService } from '../../services/authService';
 import { attendanceService } from '../../services/attendanceService';
 
@@ -8,7 +8,7 @@ import { attendanceService } from '../../services/attendanceService';
  * Employee Navbar — Systray avatar with live check-in status dot and attendance widget.
  * Used inside EmployeeLayout in App.jsx for /employee/* routes.
  */
-const Navbar = () => {
+const Navbar = ({ onToggleSidebar }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [attendance, setAttendance] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -86,8 +86,29 @@ const Navbar = () => {
 
   return (
     <header className="navbar">
-      {/* Left side: Search */}
+      {/* Left side: Hamburger (mobile) + Search */}
       <div className="navbar-left">
+        {/* Hamburger button — mobile only */}
+        <button
+          className="navbar-hamburger"
+          onClick={onToggleSidebar}
+          aria-label="Toggle sidebar"
+          style={{
+            width: '36px',
+            height: '36px',
+            borderRadius: 'var(--radius-md)',
+            background: 'var(--bg-main)',
+            border: '1px solid var(--border-color)',
+            display: 'none',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--text-muted)',
+            cursor: 'pointer',
+            flexShrink: 0,
+          }}
+        >
+          <Menu size={18} />
+        </button>
         <div style={{ position: 'relative' }}>
           <Search
             size={16}

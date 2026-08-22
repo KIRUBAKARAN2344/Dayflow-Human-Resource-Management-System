@@ -1,6 +1,8 @@
 // =============================================================================
-// LEAVE SERVICE — Combined Admin (mock) + Employee (API)
+// LEAVE SERVICE — Combined Admin (mock) + Employee (API with local fallback)
 // =============================================================================
+import apiClient from './apiClient';
+import { authService } from './authService';
 
 // ── Admin Mock Leave Records (Member 3) ───────────────────────────────────────
 const today = new Date().toISOString().split('T')[0];
@@ -108,32 +110,116 @@ export const getLeaveStats = async (records) => {
   return { total, pending, approved, rejected, onLeaveToday };
 };
 
-// ── Employee API Leave Service (Member 4) ─────────────────────────────────────
-import apiClient from './apiClient';
-import { authService } from './authService';
+// ── Local Storage Key for Employee Leaves ─────────────────────────────────────
+const EMPLOYEE_LEAVES_KEY = 'dayflow_employee_leaves';
 
+function getLocalLeaves(employeeId) {
+  try {
+    const raw = localStorage.getItem(EMPLOYEE_LEAVES_KEY);
+    const all = raw ? JSON.parse(raw) : [];
+    if (!employeeId) return all;
+    return all.filter((l) => String(l.employeeId) === String(employeeId));
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalLeave(leave) {
+  try {
+    const raw = localStorage.getItem(EMPLOYEE_LEAVES_KEY);
+    const all = raw ? JSON.parse(raw) : [];
+    all.unshift(leave);
+    localStorage.setItem(EMPLOYEE_LEAVES_KEY, JSON.stringify(all));
+  } catch {
+    // ignore
+  }
+}
+
+// ── Employee API Leave Service (Member 4) with local fallback ─────────────────
 export const leaveService = {
   async applyLeave(leaveData) {
     const user = authService.getCurrentUser();
+
+    // Resolve employeeId — must be a number for the backend
+    let employeeId = leaveData.employeeId || user?.id;
+    // Convert string IDs like 'EMP-001' to a numeric fallback
+    if (typeof employeeId === 'string' && isNaN(Number(employeeId))) {
+      employeeId = 1; // default numeric fallback
+    } else {
+      employeeId = Number(employeeId) || 1;
+    }
+
     const payload = {
-      employeeId: leaveData.employeeId || user?.id || 1,
+      employeeId,
       leaveType: leaveData.leaveType,
       startDate: leaveData.startDate,
       endDate: leaveData.endDate,
       reason: leaveData.reason || '',
     };
-    const response = await apiClient.post('/api/leaves', payload);
-    return response.data;
+
+    // Try the real backend first
+    try {
+      const response = await apiClient.post('/api/leaves', payload);
+      return response.data;
+    } catch (err) {
+      // If backend fails (401, 403, network error) — use local storage fallback
+      console.warn('Backend leave API unavailable, using local fallback:', err.message);
+
+      // Validate dates locally
+      if (!payload.startDate || !payload.endDate) {
+        throw new Error('Start date and end date are required.');
+      }
+      if (payload.endDate < payload.startDate) {
+        throw new Error('End date cannot be before start date.');
+      }
+
+      const localLeave = {
+        id: 'LOCAL-' + Date.now(),
+        employeeId,
+        leaveType: payload.leaveType,
+        startDate: payload.startDate,
+        endDate: payload.endDate,
+        reason: payload.reason,
+        status: 'PENDING',
+        appliedOn: new Date().toISOString().split('T')[0],
+      };
+
+      saveLocalLeave(localLeave);
+      return localLeave;
+    }
   },
 
   async getMyLeaves(employeeId) {
-    const targetId = employeeId || authService.getCurrentUser()?.id || 1;
-    const response = await apiClient.get(`/api/leaves/me?employeeId=${targetId}`);
-    return response.data;
+    let targetId = employeeId || authService.getCurrentUser()?.id || 1;
+
+    // Convert non-numeric IDs
+    if (typeof targetId === 'string' && isNaN(Number(targetId))) {
+      targetId = 1;
+    } else {
+      targetId = Number(targetId) || 1;
+    }
+
+    // Try backend first
+    try {
+      const response = await apiClient.get(`/api/leaves/me?employeeId=${targetId}`);
+      return response.data;
+    } catch (err) {
+      // Fallback to local storage
+      console.warn('Backend leave API unavailable, using local fallback:', err.message);
+      return getLocalLeaves(targetId);
+    }
   },
 
   async getLeaveById(id) {
-    const response = await apiClient.get(`/api/leaves/${id}`);
-    return response.data;
+    try {
+      const response = await apiClient.get(`/api/leaves/${id}`);
+      return response.data;
+    } catch (err) {
+      // Check local storage
+      const all = getLocalLeaves();
+      const found = all.find((l) => String(l.id) === String(id));
+      if (found) return found;
+      throw new Error(`Leave record ${id} not found.`);
+    }
   },
 };

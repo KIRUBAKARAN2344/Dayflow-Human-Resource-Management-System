@@ -1,6 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { Menu, X } from 'lucide-react';
 
 // ── Shared Auth ──────────────────────────────────────────────────────────────
 import Login from './pages/auth/Login';
@@ -25,18 +26,62 @@ import EmployeeAttendance from './pages/admin/EmployeeAttendance';
 import LeaveRequests      from './pages/admin/LeaveRequests';
 import AdminPayroll       from './pages/admin/Payroll';
 
-// ── Employee Layout Wrapper ───────────────────────────────────────────────────
-const EmployeeLayout = () => (
-  <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-main)' }}>
-    <Sidebar />
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-      <Navbar />
-      <main className="page-body">
-        <Outlet />
-      </main>
+// ── Employee Layout Wrapper with Mobile Sidebar Toggle ───────────────────────
+const EmployeeLayout = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  // Close sidebar on route change (mobile)
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
+  // Close sidebar when clicking outside (mobile)
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const handleClick = (e) => {
+      if (e.target.closest('.sidebar') || e.target.closest('.sidebar-toggle-btn')) return;
+      setSidebarOpen(false);
+    };
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('touchstart', handleClick);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('touchstart', handleClick);
+    };
+  }, [sidebarOpen]);
+
+  return (
+    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-main)', position: 'relative' }}>
+
+      {/* Mobile overlay backdrop */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.45)',
+            zIndex: 199,
+            display: 'none',
+          }}
+          className="sidebar-backdrop"
+        />
+      )}
+
+      {/* Sidebar — passes open state for mobile */}
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        {/* Navbar — passes toggle handler for hamburger button */}
+        <Navbar onToggleSidebar={() => setSidebarOpen((v) => !v)} />
+        <main className="page-body">
+          <Outlet />
+        </main>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 function App() {
   return (
